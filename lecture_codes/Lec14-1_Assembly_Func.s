@@ -25,11 +25,13 @@ addl $4, %esp
 // ESP points to the top (low memory) of the current stack frame
 // EBP points to the bottom (high memory) of current stack frame
 
-// stack frame contains:
+// callee stack frame contains:
 //  (low memory)
 //      local variables
 //      callee saved register values
 //      old EBP
+//---------------------------------------------------------------------------
+// caller stack frame contains:
 //      old EIP (return address)
 //      parameters to be passed to the callee function
 //      caller saved register values
