@@ -1,8 +1,15 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <assert.h>
 
 #include "lexsyn.h"
 #include "util.h"
+// #include "token.h"
+// #include "dynarray.h"
+
 
 /*--------------------------------------------------------------------*/
 /* ish.c                                                              */
@@ -12,8 +19,63 @@
 /* automaton (DFA)                                                    */
 /*--------------------------------------------------------------------*/
 
-static void
-shellHelper(const char *inLine) {
+
+/* function declaration*/
+static void shellHelper(const char *inLine, char **argv);
+
+static void SIGQUIT_Handler_Quit(int iSig);
+static void SIGQUIT_Handler_Alarm(int iSig);
+static void SIGALRM_Handler(int iSig);
+
+static void set_env(DynArray_T oTokens, char **argv);
+static void unset_env(DynArray_T oTokens, char **argv);
+static void cd(DynArray_T oTokens, char **argv);
+static void run(DynArray_T oTokens, char **argv);
+static void exit_function(DynArray_T oTokens, char **argv);
+
+
+/*--------------------------------------------------------------------*/
+/* int main(int argc, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+int main(int argc, char **argv) {
+  /* TODO */
+
+  /* ignore SIGINT */
+  void (*pfRet)(int);
+  pfRet = signal(SIGINT, SIG_IGN);
+  assert(pfRet != SIG_ERR);
+
+  /* set signal handler for SIGQUIT */
+  pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
+  assert(pfRet != SIG_ERR);
+
+  /* set signal handler for SIGALRM */
+  pfRet = signal(SIGALRM, SIGALRM_Handler);
+  assert(pfRet != SIG_ERR);
+
+  /* shell */
+  char acLine[MAX_LINE_SIZE + 2];
+  while (1) {
+    /* get the command */
+    fprintf(stdout, "%% ");
+    fflush(stdout);
+    if (fgets(acLine, MAX_LINE_SIZE, stdin) == NULL) {
+      printf("\n");
+      exit(EXIT_SUCCESS);
+    }
+
+    /* execute command */
+    shellHelper(acLine, argv);
+  }
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void shellHelper(const char *inLine, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+static void shellHelper(const char *inLine, char **argv) {
   DynArray_T oTokens;
 
   enum LexResult lexcheck;
@@ -40,6 +102,23 @@ shellHelper(const char *inLine) {
       if (syncheck == SYN_SUCCESS) {
         btype = checkBuiltin(DynArray_get(oTokens, 0));
         /* TODO */
+        switch(btype) {
+          case B_SETENV:
+            set_env(oTokens, argv);
+            break;
+          case B_USETENV:
+            unset_env(oTokens, argv);
+            break;
+          case B_CD:
+            cd(oTokens, argv);
+            break;
+          case B_EXIT:
+            exit_function(oTokens, argv);
+            break;
+          case NORMAL:
+            run(oTokens, argv);  // run the program
+            break;
+        }
       }
 
       /* syntax error cases */
@@ -75,17 +154,162 @@ shellHelper(const char *inLine) {
   }
 }
 
-int main() {
-  /* TODO */
-  char acLine[MAX_LINE_SIZE + 2];
-  while (1) {
-    fprintf(stdout, "%% ");
-    fflush(stdout);
-    if (fgets(acLine, MAX_LINE_SIZE, stdin) == NULL) {
-      printf("\n");
-      exit(EXIT_SUCCESS);
-    }
-    shellHelper(acLine);
+
+/*--------------------------------------------------------------------*/
+/* static void SIGQUIT_Handler_Quit(int iSig)
+*/
+/*--------------------------------------------------------------------*/
+static void SIGQUIT_Handler_Quit(int iSig) {
+  exit(EXIT_SUCCESS);
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void SIGQUIT_Handler_Alarm
+*/
+/*--------------------------------------------------------------------*/
+static void SIGQUIT_Handler_Alarm(int iSig) {
+  printf("\nType Ctrl-\\ again within 5 seconds to exit.\n");
+
+  /* restore default action of SIGQUIT */
+  void (*pfRet)(int);
+  pfRet = signal(SIGQUIT, SIGQUIT_Handler_Quit);
+  assert(pfRet != SIG_ERR);
+
+  /* set an alarm of 5 seconds */
+  alarm(5);
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void SIGALRM_Handler(int iSig)
+*/
+/*--------------------------------------------------------------------*/
+static void SIGALRM_Handler(int iSig) {
+    /* set signal handler for SIGQUIT */
+    void (*pfRet)(int);
+    pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
+    assert(pfRet != SIG_ERR);}
+
+
+
+/*--------------------------------------------------------------------*/
+/* static void set_env(DynArray_T oTokens, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+static void set_env(DynArray_T oTokens, char **argv) {
+  if(DynArray_getLength(oTokens) != 2 && DynArray_getLength(oTokens) != 3 ) {
+    fprintf(stderr, "%s: setenv takes one or two parameters\n", argv[0]);
+    return;
+  }
+
+  char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
+  char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
+
+  setenv(name, value, 0);
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void unset_env(DynArray_T oTokens, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+static void unset_env(DynArray_T oTokens, char **argv) {
+  if(DynArray_getLength(oTokens) != 2) {
+    fprintf(stderr, "%s: setenv takes one parameter\n", argv[0]);
+    return;
+  }
+
+  char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
+
+  unsetenv(name);
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void cd(DynArray_T oTokens, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+static void cd(DynArray_T oTokens, char **argv) {
+  char *path;
+
+  /* get the path */
+  if (DynArray_getLength(oTokens) == 1) {
+    path = getenv("HOME");
+  }
+  else if (DynArray_getLength(oTokens) == 2) {
+    path = ((struct Token *)DynArray_get(oTokens, 1))->pcValue;
+  }
+  else{
+    fprintf(stderr, "%s: cd takes one parameter\n", argv[0]);
+    return;
+  }
+
+  /* change directory */ 
+  if (chdir(path) != 0) {
+    perror(argv[0]);
   }
 }
 
+
+/*--------------------------------------------------------------------*/
+/* static void exit_function(DynArray_T oTokens, char** argv)
+*/
+/*--------------------------------------------------------------------*/
+static void exit_function(DynArray_T oTokens, char** argv) {
+  if(DynArray_getLength(oTokens) != 1) {
+    fprintf(stderr, "%s: exit does not take any parameters\n", argv[0]);
+    return;
+  }
+
+  exit(EXIT_SUCCESS);
+}
+
+
+/*--------------------------------------------------------------------*/
+/* static void run(DynArray_T oTokens, char **argv)
+*/
+/*--------------------------------------------------------------------*/
+static void run(DynArray_T oTokens, char **argv) {
+  pid_t pid;
+  char *aTokens[MAX_LINE_SIZE];
+
+  for (int i = 0; i < DynArray_getLength(oTokens); i++) {
+    aTokens[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
+  }
+
+  if((pid = fork()) < 0) {
+    /* print forking error message */
+    perror(argv[0]);
+  }
+  else if(pid == 0) { /* is child */
+    /* restore default action of SIGINT & SIGQUIT */
+    void (*pfRet)(int);
+    pfRet = signal(SIGINT, SIG_DFL);
+    assert(pfRet != SIG_ERR);
+    pfRet = signal(SIGQUIT, SIG_DFL);
+    assert(pfRet != SIG_ERR);
+
+    /* invoke new program */
+    if(execvp(aTokens[0], aTokens) < 0) {
+      perror(aTokens[0]);
+      exit(EXIT_FAILURE);
+    }
+  }
+  else { /* is parent */
+    wait(NULL);
+
+    /* ignore SIGINT */
+    void (*pfRet)(int);
+    pfRet = signal(SIGINT, SIG_IGN);
+    assert(pfRet != SIG_ERR);
+
+    /* set signal handler for SIGQUIT */
+    pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
+    assert(pfRet != SIG_ERR);
+
+    /* set signal handler for SIGALRM */
+    pfRet = signal(SIGALRM, SIGALRM_Handler);
+    assert(pfRet != SIG_ERR);
+  }
+}
