@@ -15,7 +15,7 @@
 // Long(l): 4 bytes, 32 bit
 //     (q): 8 bytes, 64 bit
 
-// Intel is a little endianarchitecture
+// Intel is a little endian architecture
 
 
 /* General purpose registers */
@@ -27,8 +27,15 @@
 
 
 /* special purpose registers */
-// instruction pointer(%eip, %rip): stores the location of the "next" instruction
-// flag register(%eflags): stores the status of the operations
+// instruction pointer(%eip, %rip):
+//      stores the location of the "next" instruction
+// stack pointer register(%esp, %rsp):
+//      address of the "top" of the stack
+// base pointer register(%ebp, %rbp):
+//      fixed reference point to access parameters,
+//      "start" address of the "new" stack
+// flag register(%eflags): 
+//      stores the status of the operations
 
 
 /* loading and storing data */
