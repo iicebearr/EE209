@@ -101,7 +101,7 @@ int main(void)
     // free: deallocate storage
     void *p1 = malloc(10);
     void *q2 = malloc(10);
-    free(p);
+    free(p1);
     p = q;
 
 
