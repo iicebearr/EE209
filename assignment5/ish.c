@@ -206,6 +206,7 @@ static void set_env(DynArray_T oTokens, char **argv) {
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
   char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
 
+  DynArray_free(oTokens);
   setenv(name, value, 0);
 }
 
@@ -222,6 +223,7 @@ static void unset_env(DynArray_T oTokens, char **argv) {
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
 
+  DynArray_free(oTokens);
   unsetenv(name);
 }
 
@@ -242,10 +244,12 @@ static void cd(DynArray_T oTokens, char **argv) {
   }
   else{
     fprintf(stderr, "%s: cd takes one parameter\n", argv[0]);
+    DynArray_free(oTokens);
     return;
   }
 
   /* change directory */ 
+  DynArray_free(oTokens);
   if (chdir(path) != 0) {
     perror(argv[0]);
   }
@@ -262,6 +266,7 @@ static void exit_function(DynArray_T oTokens, char** argv) {
     return;
   }
 
+  DynArray_free(oTokens);
   exit(EXIT_SUCCESS);
 }
 
@@ -272,12 +277,16 @@ static void exit_function(DynArray_T oTokens, char** argv) {
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
   pid_t pid;
-  char *aTokens[MAX_LINE_SIZE];
-
-  for (int i = 0; i < DynArray_getLength(oTokens); i++) {
-    aTokens[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
+  int i;
+  char *arguments[MAX_ARGS_CNT];
+  
+  /* make an array of arguments*/
+  for (i = 0; i < DynArray_getLength(oTokens); i++) {
+    arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
   }
+  arguments[i] = NULL;
 
+  /* fork child process*/
   if((pid = fork()) < 0) {
     /* print forking error message */
     perror(argv[0]);
@@ -291,8 +300,8 @@ static void run(DynArray_T oTokens, char **argv) {
     assert(pfRet != SIG_ERR);
 
     /* invoke new program */
-    if(execvp(aTokens[0], aTokens) < 0) {
-      perror(aTokens[0]);
+    if(execvp(arguments[0], arguments) < 0) {
+      perror(arguments[0]);
       exit(EXIT_FAILURE);
     }
   }
@@ -311,5 +320,7 @@ static void run(DynArray_T oTokens, char **argv) {
     /* set signal handler for SIGALRM */
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
+
+    DynArray_free(oTokens);
   }
 }
