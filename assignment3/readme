@@ -1,0 +1,18 @@
+Name: Eungjoe Kang
+Student ID: 20210013
+Assignment Number: 3
+Comparison of Implementation Method:
+ Implementation by array becomes slow is when dealing with
+ a large number of user items as adding, deleting, and searching of
+ a user item depends on linear search.
+
+ However, implementation by hash table is fast even when dealing with
+ a large number of user items as adding, deleting, and searching of
+ a user item does not depend on the number of user items
+ (for a good hash function).
+
+ Although, hash table is more difficult to implement and maintain
+ as it requiires a lot of memory allocation.
+
+Hash table expansion is not implemented.
+Description of each source code file is cited from the EE209 website.
