@@ -103,9 +103,4 @@ int main(void)
     void *q2 = malloc(10);
     free(p1);
     p = q;
-
-
-
-    
-
 }
