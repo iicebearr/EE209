@@ -19,7 +19,11 @@
 
 int main(void)
 {
-    /* standard I/O functions */ 
+    /* standard I/O functions */
+    // fopen(), fclose(), fflush(),
+    // fprintf(). fscanf(),
+    // getchar(), fgets(), etc.
+
     int i = 1;
     char text[100];
 
@@ -35,12 +39,15 @@ int main(void)
     fclose(fp2);
 
 
-    /* system calls for I/O */
+    /* "system calls" for I/O */
     // int creat(char *pathname, mode_t mode);
     //      Creates a new file named pathname, and returns a file descriptor
-    
+    //      mode: permissions to set
+
     // int open(char *pathname, int flags, mode_t mode);
     //      Opens the file pathname and returns a file descriptor
+    //      flags: O_RDONLY, O_WRONLY, )_RDWR
+    //      mode: permissions to set if file is created
     
     // int close(int fd);
     //      Closes fd
@@ -48,6 +55,7 @@ int main(void)
     // int read(int fd, void *buf, int count);
     //      Reads up to count bytes from fd into the buffer at buf
     //      Returns the number of bytes read
+    //      file offset is incremented by the number of bytes read
     
     // int write(int fd, void *buf, int count);
     //      Writes up to count bytes into fd from the buffer at buf
@@ -61,7 +69,4 @@ int main(void)
     fflush(stdout); // flush the output buffer
     sleep(3);
     printf("Step 2\n");
-
-
-
 }
