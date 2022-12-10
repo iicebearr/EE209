@@ -1,0 +1,50 @@
+exception: an abrupt change in control flow
+           in response to a change in processor state
+
+- when an exception occurs, control is transfered to the OS
+  and the OS runs exception handler 
+- handler runs in "privileged mode", not in "user mode"
+
+
+synchronous: caused by the execution of the current instruction
+asynchronous: not caused by the crrent instruction
+
+
+< 4 classes of exceptions >
+- synchronous or asynchronous:
+ 1. interrupts: asynchronous
+ 2. traps     : synchronous
+ 3. faults    : synchronous
+ 4. aborts    : synchronous
+
+- cause:
+ 1. interrupts: signal from I/O device
+ 2. traps     : intentional, appliaction program requests OS service
+ 3. faults    : appliaction program causes (possibly) recoverable error
+ 4. aborts    : non-recoverable error occurs
+
+- result:
+ 1. interrupts: returns to next instruction
+ 2. traps     : returns to next instruction
+ 3. faults    : returns to current instruction (recoverable error) or aborts
+ 4. aborts    : aborts
+
+system call: function that invokes trap
+
+program: executable code 
+processs: instance of a program in ececution
+
+each program runs in the context of some process
+context consists of:
+- process id
+- address space (TEXT. RODATA, DATA, BSS, HEAP, STACK)
+- processor state (EIP, EFLAGS, EAX, EBA, etc. registers)
+- etc.
+
+process abstraction provides the appliaction program with two illusions
+1. private control flow, dedicated CPU ( by context switching)
+2. private address space, dedicated memory (by virtual memory)
+
+context switching: activity whereby the OS assigns
+                   the CPU to a different process
+context switching occurs during excption handling
