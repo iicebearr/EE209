@@ -78,30 +78,10 @@ movl 8(%eax), %ebx // dereference (8 + %eax) and store it in %ebx
 movl 8(%eax, %ebx, 4), %ecx // dereference (8 + %eax + %ebx * 4)
 
 // format: "disp(base, index, scale)" -> disp + base + index * sclae
-// base: register
+// base: register        , assumed 0 when omitted, ex) (, %ebx, 4)
 // index: register 
 // disp: None, 1, 2, 4, 8, assumed 0 when omitted (bytes), ex) (%eax, %ebx, 4)
-// scale: 1, 2, 4, 8, assumed 1 when omitted (bytes), ex) (%eax, %ebx)
-
-
-/* arithmetic instructions */
-addl %eax, %ebx // %ebx = %ebx + %eax
-subl %eax, %ebx // %ebx = %ebx - %eax
-
-// signed
-imull %ebx // %rax = %eax * %ebx
-idivl %ebx // %rax = %eax / %ebx, %edx = %eax % %ebx
-
-// unsigned
-mull %ebx // %edx = %eax / %ebx
-divl %ebx // %eax = %eax * %ebx
-
-incl %eax // %eax = %eax + 1
-decl %eax // %eax = %eax - 1
-
-negl %eax // %eax = ~%eax + 1 (2's complement)
-
-cmpl %eax, %ebx // %ebx - %eax
+// scale:      1, 2, 4, 8, assumed 1 when omitted (bytes), ex) (%eax, %ebx)
 
 
 /* arithmetic instructions */

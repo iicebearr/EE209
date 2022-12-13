@@ -10,12 +10,13 @@
 // how signal is sent and handled 
 //      1. Exception occurs(interrupt, trap, fault, abort)
 //      2. Context switched to OS
-//      3. OS sends signal to application process
-//      4. When application process regains CPU it handles it
+//      3. "OS sends signal" to application process
+//      4. When application process "regains CPU" it handles it
+//      5. (Optionally) Application process resumes where it left off
 
-// Ctrl-c: 2/SIGINT
-// Ctrl-z: 20/SIGSTP
-// Ctrl-\: 3/SIGQUIT
+// Ctrl-c: 2/SIGINT, terminate
+// Ctrl-z: 20/SIGTSTP, terminal stop
+// Ctrl-\: 3/SIGQUIT, terminate
 
 
 /* Ctrl-c: 2/SIGINT */
@@ -52,6 +53,9 @@
 static void myHandler(int iSig) {
     printf("In myHandler with argument %d\n", iSig);
 }
+
+// While executing a handler for a signal of type x,
+// all signals of type x are blocked automatically
 
 int main(int argc, char **argv)
 {

@@ -46,7 +46,7 @@ int main(void)
 
     // int open(char *pathname, int flags, mode_t mode);
     //      Opens the file pathname and returns a file descriptor
-    //      flags: O_RDONLY, O_WRONLY, )_RDWR
+    //      flags: O_RDONLY, O_WRONLY, O_RDWR
     //      mode: permissions to set if file is created
     
     // int close(int fd);
@@ -61,7 +61,8 @@ int main(void)
     //      Writes up to count bytes into fd from the buffer at buf
     
     // int lseek(int fd, int offset, int whence);
-    //      Assigns the file pointer of fd to a new value by applying an offset
+    //      Assigns the file pointer of fd to a new value
+    //      by applying an offset
 
 
     /* bufferd I/O */

@@ -60,7 +60,7 @@ addl $4, %esp
 /* 2. push function parameters */
 pushl parameters
 
-/* 3. implementation of "call"*/
+/* 3. implementation of "call" */
 // push EIP into stack and jump
 // call address
 pushl %eip // store old EIP
