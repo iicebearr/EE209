@@ -59,6 +59,9 @@ int main(void)
     // int dup(int oldfd)
     // Create a copy of the file descriptor oldfd and
     // uses the lowest-numbered unused descriptor for the new descriptor
+    // Return the new descriptor
+    // They refer to the same open file description and
+    // thus share "file offset" and "file status flags"
 
     // int dup2(int oldfd, int fd)
     // can designate which fd to replace
