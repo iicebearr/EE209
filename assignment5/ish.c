@@ -71,9 +71,8 @@ int main(int argc, char **argv) {
   }
 
   FILE *fp;
-  if((fp = fopen(".ishrc","r")) != NULL) {
+  if((fp = fopen(".ishrc","r")) != NULL) {  // if there is file .ishrc
     while (1) {
-      /* get the command from .ishrc */
       if (fgets(acLine, MAX_LINE_SIZE, fp) == NULL) { // if input is NULL
         //printf("\n");
         break;                       // go on to receive input from stdin
