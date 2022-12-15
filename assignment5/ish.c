@@ -309,14 +309,14 @@ static void run(DynArray_T oTokens, char **argv) {
     for (i = 0; i < DynArray_getLength(oTokens); i++) {
       /* stdin redirection */
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDIN) {
-        int fd = open(arguments[i+1], O_RDONLY, 640);
+        int fd = open(arguments[i+1], O_RDONLY);
         close(0);
         dup(fd);
         close(fd);
       } 
       /* stdout redirection */
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDOUT) {
-        int fd = open(arguments[i+1], O_WRONLY, 640);
+        int fd = open(arguments[i+1], O_RDWR | O_CREAT | O_TRUNC, 777);
         close(1);
         dup(fd);
         close(fd);
