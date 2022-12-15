@@ -3,14 +3,15 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <assert.h>
+#include <string.h>
 
 #include "lexsyn.h"
 #include "util.h"
 // #include "token.h"
 // #include "dynarray.h"
 
-/* sjdfjsjdnf */
 
 /*--------------------------------------------------------------------*/
 /* ish.c                                                              */
@@ -82,6 +83,8 @@ static void shellHelper(const char *inLine, char **argv) {
   enum LexResult lexcheck;
   enum SyntaxResult syncheck;
   enum BuiltinType btype;
+
+  errorPrint(argv[0], SETUP);
 
   oTokens = DynArray_new(0);
   if (oTokens == NULL) {
@@ -278,14 +281,6 @@ static void exit_function(DynArray_T oTokens, char** argv) {
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
   pid_t pid;
-  int i;
-  char *arguments[MAX_ARGS_CNT];
-  
-  /* make an array of arguments*/
-  for (i = 0; i < DynArray_getLength(oTokens); i++) {
-    arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
-  }
-  arguments[i] = NULL;
 
   /* fork child process*/
   if((pid = fork()) < 0) {
@@ -299,6 +294,35 @@ static void run(DynArray_T oTokens, char **argv) {
     assert(pfRet != SIG_ERR);
     pfRet = signal(SIGQUIT, SIG_DFL);
     assert(pfRet != SIG_ERR);
+
+    int i;
+    char *arguments[MAX_ARGS_CNT];
+    
+    /* make an array of arguments*/
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
+    }
+    arguments[i] = NULL;
+
+
+    /* redirection */
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      /* stdin redirection */
+      if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDIN) {
+        int fd = open(arguments[i+1], O_RDONLY, 640);
+        close(0);
+        dup(fd);
+        close(fd);
+      } 
+      /* stdout redirection */
+      if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDOUT) {
+        int fd = open(arguments[i+1], O_WRONLY, 640);
+        close(1);
+        dup(fd);
+        close(fd);
+      } 
+    }
+
 
     /* invoke new program */
     if(execvp(arguments[0], arguments) < 0) {
