@@ -295,6 +295,7 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGQUIT, SIG_DFL);
     assert(pfRet != SIG_ERR);
 
+
     int i;
     char *arguments[MAX_ARGS_CNT];
     
