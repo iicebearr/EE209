@@ -13,6 +13,7 @@ int main(void)
     // but returns twice, once in each process
     // returns 0 for child, and returns child's process ID for parent
 
+
     /* Inherited from parent to child*/ 
     // User and group IDs
     // Signal handling settings
