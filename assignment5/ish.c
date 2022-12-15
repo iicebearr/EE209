@@ -268,6 +268,7 @@ static void exit_function(DynArray_T oTokens, char** argv) {
   }
 
   DynArray_free(oTokens);
+  printf("\n");
   exit(EXIT_SUCCESS);
 }
 
