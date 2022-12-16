@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <assert.h>
 #include <string.h>
+#include <linux/limits.h>
 
 #include "lexsyn.h"
 #include "util.h"
@@ -58,13 +59,42 @@ int main(int argc, char **argv) {
 
   /* shell */
   char acLine[MAX_LINE_SIZE + 2];
+
+  char oldpath[PATH_MAX];                // store oldpath
+  if (getcwd(oldpath, sizeof(oldpath)) < 0) {
+    perror(argv[0]);
+  }     
+
+  char* homepath = getenv("HOME");      // change working directory to HOME
+  if (chdir(homepath) != 0) {
+    perror(argv[0]);
+  }
+
+  FILE *fp;
+  if((fp = fopen(".ishrc","r")) != NULL) {  // if there is file .ishrc
+    while (1) {
+      if (fgets(acLine, MAX_LINE_SIZE, fp) == NULL) { // if input is NULL
+        //printf("\n");
+        break;                       // go on to receive input from stdin
+      }
+
+      fprintf(stdout, "%% %s", acLine);      // print command line
+      fflush(stdout);
+      shellHelper(acLine, argv);    // execute command
+    }
+  } 
+
+  if (chdir(oldpath) != 0) {      // change working directory back to original
+    perror(argv[0]);
+  }
+
   while (1) {
     /* get the command */
     fprintf(stdout, "%% ");
     fflush(stdout);
-    if (fgets(acLine, MAX_LINE_SIZE, stdin) == NULL) {
+    if (fgets(acLine, MAX_LINE_SIZE, stdin) == NULL) { // if input is NULL
       printf("\n");
-      exit(EXIT_SUCCESS);
+      exit(EXIT_SUCCESS);                              // exit
     }
 
     /* execute command */
