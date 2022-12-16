@@ -123,7 +123,7 @@ static void shellHelper(const char *inLine, char **argv) {
   enum SyntaxResult syncheck;
   enum BuiltinType btype;
 
-  errorPrint(argv[0], SETUP);
+  errorPrint(argv[0], SETUP); // set ishname
 
   oTokens = DynArray_new(0);
   if (oTokens == NULL) {
@@ -357,7 +357,7 @@ static void run(DynArray_T oTokens, char **argv) {
       } 
       /* stdout redirection */
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDOUT) {
-        int fd = open(arguments[i+1], O_RDWR | O_CREAT | O_TRUNC, 777);
+        int fd = open(arguments[i+1], O_RDWR | O_CREAT | O_TRUNC, 0600);
         close(1);
         dup(fd);
         close(fd);
