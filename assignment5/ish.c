@@ -255,8 +255,8 @@ static void set_env(DynArray_T oTokens, char **argv) {
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
   char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
 
+  setenv(name, value, 1);
   oTokenfree(oTokens);
-  setenv(name, value, 0);
 }
 
 
@@ -273,8 +273,8 @@ static void unset_env(DynArray_T oTokens, char **argv) {
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
 
-  oTokenfree(oTokens);
   unsetenv(name);
+  oTokenfree(oTokens);
 }
 
 
@@ -299,10 +299,10 @@ static void cd(DynArray_T oTokens, char **argv) {
   }
 
   /* change directory */ 
-  oTokenfree(oTokens);
   if (chdir(path) != 0) {
     perror(argv[0]);
   }
+  oTokenfree(oTokens);
 }
 
 
@@ -348,16 +348,16 @@ static void run(DynArray_T oTokens, char **argv) {
     for (j = 0; j < i; j++) {
       DynArray_add(oTokens_left, DynArray_get(oTokens, j));
     }
-    fprintf(stderr,"1. %s\n", ((struct Token *)(DynArray_get(oTokens_left, 0)))->pcValue); //
-    fprintf(stderr,"1. %d\n", DynArray_getLength(oTokens_left)); //
+    // fprintf(stderr,"1. %s\n", ((struct Token *)(DynArray_get(oTokens_left, 0)))->pcValue); //
+    // fprintf(stderr,"1. %d\n", DynArray_getLength(oTokens_left)); //
     // fprintf(stderr, "a\n");
 
 
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
-    fprintf(stderr,"2. %s\n", ((struct Token *)(DynArray_get(oTokens_right, 0)))->pcValue); //
-    fprintf(stderr,"2. %d\n", DynArray_getLength(oTokens_right)); //
+    // fprintf(stderr,"2. %s\n", ((struct Token *)(DynArray_get(oTokens_right, 0)))->pcValue); //
+    // fprintf(stderr,"2. %d\n", DynArray_getLength(oTokens_right)); //
     // fprintf(stderr, "b\n");
 
 
@@ -369,9 +369,9 @@ static void run(DynArray_T oTokens, char **argv) {
       close(fds[0]);
       dup2(fds[1],1);
       close(fds[1]);
-      fprintf(stderr, "c - running o_left\n");
+      //fprintf(stderr, "c - running o_left\n");
       run(oTokens_left, argv); // run left command
-      fprintf(stderr, "left run success\n");
+      //fprintf(stderr, "left run success\n");
       exit(EXIT_SUCCESS);
     }
     else { /* is parent */
@@ -379,13 +379,13 @@ static void run(DynArray_T oTokens, char **argv) {
       close(fds[1]);
       dup2(fds[0],0);
       close(fds[0]);
-      fprintf(stderr, "d - running o_right\n");
+      //fprintf(stderr, "d - running o_right\n");
       run(oTokens_right, argv); // run right command
-      fprintf(stderr, "right run success\n");
+      //fprintf(stderr, "right run success\n");
       return;
     }
 
-    fprintf(stderr, "e\n");
+    //fprintf(stderr, "e\n");
   }
 
 
@@ -430,7 +430,7 @@ static void run(DynArray_T oTokens, char **argv) {
     }
 
     /* invoke program */
-    fprintf(stderr, "argument is: %s\n", arguments[0]);
+    //fprintf(stderr, "argument is: %s\n", arguments[0]);
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);
       oTokenfree(oTokens);
