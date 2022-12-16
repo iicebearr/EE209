@@ -415,7 +415,6 @@ static void run(DynArray_T oTokens, char **argv) {
     }
 
     /* invoke program */
-    //fprintf(stderr, "argument is: %s\n", arguments[0]);
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);
       oTokenfree(oTokens);
