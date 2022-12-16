@@ -163,6 +163,8 @@ static void shellHelper(const char *inLine, char **argv) {
           case NORMAL:
             run(oTokens, argv);  // run the program
             break;
+          default:
+            break;
         }
       }
 
@@ -234,7 +236,8 @@ static void SIGALRM_Handler(int iSig) {
     /* set signal handler for SIGQUIT */
     void (*pfRet)(int);
     pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
-    assert(pfRet != SIG_ERR);}
+    assert(pfRet != SIG_ERR);
+}
 
 
 
