@@ -350,6 +350,14 @@ static void run(DynArray_T oTokens, char **argv) {
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
+
+    //freeing
+    fprintf(stderr, "freed: ");
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      fprintf(stderr, " %s ", ((struct Token*)DynArray_get(oTokens, i))->pcValue);
+    }
+    fprintf(stderr, "\n");
+
     oTokenfree(oTokens);
 
     // pipe
@@ -447,7 +455,6 @@ static void run(DynArray_T oTokens, char **argv) {
     }
     fprintf(stderr, "\n");
 
-    
     oTokenfree(oTokens);
     return;
   }
