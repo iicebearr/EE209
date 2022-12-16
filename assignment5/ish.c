@@ -133,7 +133,6 @@ static void shellHelper(const char *inLine, char **argv) {
     exit(EXIT_FAILURE);
   }
 
-
   lexcheck = lexLine(inLine, oTokens);
   switch (lexcheck) {
     case LEX_SUCCESS:
@@ -351,6 +350,7 @@ static void run(DynArray_T oTokens, char **argv) {
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
+    oTokenfree(oTokens);
 
     // pipe
     pipe(fds);
@@ -366,9 +366,12 @@ static void run(DynArray_T oTokens, char **argv) {
     else { /* is parent */
       waitpid(id, NULL, 0);
       close(fds[1]);
+      int temp = dup(0);
       dup2(fds[0],0);
       close(fds[0]);
       run(oTokens_right, argv); // run right command
+      dup2(temp, 0);
+      close(temp);
       return;
     }
   }
@@ -437,6 +440,14 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
 
+
+    fprintf(stderr, "freed: ");
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      fprintf(stderr, " %s ", ((struct Token*)DynArray_get(oTokens, i))->pcValue);
+    }
+    fprintf(stderr, "\n");
+
+    
     oTokenfree(oTokens);
     return;
   }
