@@ -3,7 +3,10 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <assert.h>
+#include <string.h>
+#include <linux/limits.h>
 
 #include "lexsyn.h"
 #include "util.h"
@@ -12,7 +15,6 @@
 // #include "token.h"
 // #include "dynarray.h"
 
-/* sjdfjsjdnf */
 
 /*--------------------------------------------------------------------*/
 /* ish.c                                                              */
@@ -44,6 +46,14 @@ static void exit_function(DynArray_T oTokens, char **argv);
 int main(int argc, char **argv) {
   /* TODO */
 
+  /* make sure SIGINT, SIGQUIT, and SIGALRM signals are not blocked */
+  sigset_t sSet;
+  sigemptyset(&sSet);
+  sigaddset(&sSet, SIGINT);
+  sigaddset(&sSet, SIGQUIT);
+  sigaddset(&sSet, SIGALRM);
+  sigprocmask(SIG_UNBLOCK, &sSet, NULL);
+
   /* ignore SIGINT */
   void (*pfRet)(int);
   pfRet = signal(SIGINT, SIG_IGN);
@@ -56,6 +66,7 @@ int main(int argc, char **argv) {
   /* set signal handler for SIGALRM */
   pfRet = signal(SIGALRM, SIGALRM_Handler);
   assert(pfRet != SIG_ERR);
+
 
   /* shell */
   char acLine[MAX_LINE_SIZE + 2];
@@ -113,6 +124,8 @@ static void shellHelper(const char *inLine, char **argv) {
   enum LexResult lexcheck;
   enum SyntaxResult syncheck;
   enum BuiltinType btype;
+
+  errorPrint(argv[0], SETUP); // set ishname
 
   oTokens = DynArray_new(0);
   if (oTokens == NULL) {
@@ -310,14 +323,6 @@ static void exit_function(DynArray_T oTokens, char** argv) {
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
   pid_t pid;
-  int i;
-  char *arguments[MAX_ARGS_CNT];
-  
-  /* make an array of arguments*/
-  for (i = 0; i < DynArray_getLength(oTokens); i++) {
-    arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
-  }
-  arguments[i] = NULL;
 
   /* fork child process*/
   if((pid = fork()) < 0) {
@@ -331,6 +336,36 @@ static void run(DynArray_T oTokens, char **argv) {
     assert(pfRet != SIG_ERR);
     pfRet = signal(SIGQUIT, SIG_DFL);
     assert(pfRet != SIG_ERR);
+
+
+    int i;
+    char *arguments[MAX_ARGS_CNT];
+    
+    /* make an array of arguments*/
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
+    }
+    arguments[i] = NULL;
+
+
+    /* redirection */
+    for (i = 0; i < DynArray_getLength(oTokens); i++) {
+      /* stdin redirection */
+      if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDIN) {
+        int fd = open(arguments[i+1], O_RDONLY);
+        close(0);
+        dup(fd);
+        close(fd);
+      } 
+      /* stdout redirection */
+      if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDOUT) {
+        int fd = open(arguments[i+1], O_RDWR | O_CREAT | O_TRUNC, 0600);
+        close(1);
+        dup(fd);
+        close(fd);
+      } 
+    }
+
 
     /* invoke new program */
     if(execvp(arguments[0], arguments) < 0) {
