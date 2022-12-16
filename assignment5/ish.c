@@ -368,13 +368,9 @@ static void run(DynArray_T oTokens, char **argv) {
       close(fds[1]);
       dup2(fds[0],0);
       close(fds[0]);
-      //fprintf(stderr, "d - running o_right\n");
       run(oTokens_right, argv); // run right command
-      //fprintf(stderr, "right run success\n");
       return;
     }
-
-    //fprintf(stderr, "e\n");
   }
 
 
