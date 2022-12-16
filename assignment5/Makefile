@@ -8,7 +8,7 @@ SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.o, %.o, $(SRCS))
 
 CC = gcc
-CFLAGS = -g 
+CFLAGS = -g
 
 # FIX THIS FILE
 

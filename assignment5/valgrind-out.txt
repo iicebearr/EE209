@@ -1,1503 +1,184 @@
-==20747== Memcheck, a memory error detector
-==20747== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==20747== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==20747== Command: ./ish
-==20747== Parent PID: 312
-==20747== 
-==20927== Invalid read of size 4
-==20927==    at 0x109FB9: run (ish.c:338)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47b80 is 0 bytes inside a block of size 16 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B524: makeToken (token.c:32)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20928== Invalid read of size 8
-==20928==    at 0x10A322: run (ish.c:405)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47b88 is 8 bytes inside a block of size 16 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B504: freeToken (token.c:17)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B524: makeToken (token.c:32)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 4
-==20928==    at 0x10A38E: run (ish.c:412)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47b80 is 0 bytes inside a block of size 16 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B504: freeToken (token.c:17)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B524: makeToken (token.c:32)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 4
-==20928==    at 0x10A3FB: run (ish.c:419)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47b80 is 0 bytes inside a block of size 16 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B504: freeToken (token.c:17)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B524: makeToken (token.c:32)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 1
-==20928==    at 0x49358A4: __execvpe_common (execvpe.c:75)
-==20928==    by 0x49358A4: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 1
-==20928==    at 0x483EBF4: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20928==    by 0x49358BF: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 1
-==20928==    at 0x483EC00: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20928==    by 0x49358BF: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd1 is 1 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 1
-==20928==    at 0x483EEF9: strnlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x4935939: __execvpe_common (execvpe.c:98)
-==20928==    by 0x4935939: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 4
-==20928==    at 0x4935D7D: __execvpe_common (execvpe.c:134)
-==20928==    by 0x4935D7D: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Invalid read of size 4
-==20928==    at 0x4935D86: __execvpe_common (execvpe.c:134)
-==20928==    by 0x4935D86: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd1 is 1 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20928== Syscall param execve(argv[i]) points to unaddressable byte(s)
-==20928==    at 0x493517B: execve (syscall-template.S:78)
-==20928==    by 0x4935B6E: __execvpe_common (execvpe.c:136)
-==20928==    by 0x4935B6E: execvpe (execvpe.c:190)
-==20928==    by 0x10A490: run (ish.c:428)
-==20928==    by 0x10A1AE: run (ish.c:370)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20928==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B4F8: freeToken (token.c:15)
-==20928==    by 0x10A689: oTokenfree (ish.c:468)
-==20928==    by 0x10A146: run (ish.c:360)
-==20928==    by 0x109B01: shellHelper (ish.c:163)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928==  Block was alloc'd at
-==20928==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20928==    by 0x10B55E: makeToken (token.c:39)
-==20928==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20928==    by 0x10C857: lexLine (lexsyn.c:357)
-==20928==    by 0x1099CB: shellHelper (ish.c:136)
-==20928==    by 0x10995E: main (ish.c:112)
-==20928== 
-==20927== Invalid read of size 8
-==20927==    at 0x10A5DC: run (ish.c:453)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47b88 is 8 bytes inside a block of size 16 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B524: makeToken (token.c:32)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 1
-==20927==    at 0x483EF46: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x48CAD14: __vfprintf_internal (vfprintf-internal.c:1688)
-==20927==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20927==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20927==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20927==    by 0x10A5FA: run (ish.c:453)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B55E: makeToken (token.c:39)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 1
-==20927==    at 0x483EF54: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x48CAD14: __vfprintf_internal (vfprintf-internal.c:1688)
-==20927==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20927==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20927==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20927==    by 0x10A5FA: run (ish.c:453)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47bd1 is 1 bytes inside a block of size 5 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B55E: makeToken (token.c:39)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 1
-==20927==    at 0x48E4130: _IO_default_xsputn (genops.c:394)
-==20927==    by 0x48E4130: _IO_default_xsputn (genops.c:370)
-==20927==    by 0x48C90FB: __vfprintf_internal (vfprintf-internal.c:1688)
-==20927==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20927==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20927==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20927==    by 0x10A5FA: run (ish.c:453)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B55E: makeToken (token.c:39)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 1
-==20927==    at 0x48E413E: _IO_default_xsputn (genops.c:393)
-==20927==    by 0x48E413E: _IO_default_xsputn (genops.c:370)
-==20927==    by 0x48C90FB: __vfprintf_internal (vfprintf-internal.c:1688)
-==20927==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20927==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20927==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20927==    by 0x10A5FA: run (ish.c:453)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47bd2 is 2 bytes inside a block of size 5 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B55E: makeToken (token.c:39)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 8
-==20927==    at 0x10B4E0: freeToken (token.c:14)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A63B: run (ish.c:457)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47b88 is 8 bytes inside a block of size 16 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B524: makeToken (token.c:32)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid read of size 8
-==20927==    at 0x10B4ED: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A63B: run (ish.c:457)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47b88 is 8 bytes inside a block of size 16 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B524: makeToken (token.c:32)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid free() / delete / delete[] / realloc()
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A63B: run (ish.c:457)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47bd0 is 0 bytes inside a block of size 5 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B4F8: freeToken (token.c:15)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B55E: makeToken (token.c:39)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== Invalid free() / delete / delete[] / realloc()
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A63B: run (ish.c:457)
-==20927==    by 0x10A1AE: run (ish.c:370)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Address 0x4a47b80 is 0 bytes inside a block of size 16 free'd
-==20927==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B504: freeToken (token.c:17)
-==20927==    by 0x10A689: oTokenfree (ish.c:468)
-==20927==    by 0x10A146: run (ish.c:360)
-==20927==    by 0x109B01: shellHelper (ish.c:163)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927==  Block was alloc'd at
-==20927==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20927==    by 0x10B524: makeToken (token.c:32)
-==20927==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20927==    by 0x10C857: lexLine (lexsyn.c:357)
-==20927==    by 0x1099CB: shellHelper (ish.c:136)
-==20927==    by 0x10995E: main (ish.c:112)
-==20927== 
-==20927== 
-==20927== HEAP SUMMARY:
-==20927==     in use at exit: 80 bytes in 2 blocks
-==20927==   total heap usage: 31 allocs, 35 frees, 3,167 bytes allocated
-==20927== 
-==20927== LEAK SUMMARY:
-==20927==    definitely lost: 0 bytes in 0 blocks
-==20927==    indirectly lost: 0 bytes in 0 blocks
-==20927==      possibly lost: 0 bytes in 0 blocks
-==20927==    still reachable: 80 bytes in 2 blocks
-==20927==         suppressed: 0 bytes in 0 blocks
-==20927== Reachable blocks (those to which a pointer was found) are not shown.
-==20927== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==20927== 
-==20927== For lists of detected and suppressed errors, rerun with: -s
-==20927== ERROR SUMMARY: 49 errors from 10 contexts (suppressed: 0 from 0)
-==20747== Invalid read of size 4
-==20747==    at 0x109FB9: run (ish.c:338)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 8
-==20747==    at 0x10A0E7: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 1
-==20747==    at 0x483EF46: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x48CAD14: __vfprintf_internal (vfprintf-internal.c:1688)
-==20747==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20747==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20747==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20747==    by 0x10A105: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 1
-==20747==    at 0x483EF54: strlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x48CAD14: __vfprintf_internal (vfprintf-internal.c:1688)
-==20747==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20747==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20747==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20747==    by 0x10A105: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e61 is 1 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 1
-==20747==    at 0x48E4130: _IO_default_xsputn (genops.c:394)
-==20747==    by 0x48E4130: _IO_default_xsputn (genops.c:370)
-==20747==    by 0x48C90FB: __vfprintf_internal (vfprintf-internal.c:1688)
-==20747==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20747==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20747==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20747==    by 0x10A105: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 1
-==20747==    at 0x48E413E: _IO_default_xsputn (genops.c:393)
-==20747==    by 0x48E413E: _IO_default_xsputn (genops.c:370)
-==20747==    by 0x48C90FB: __vfprintf_internal (vfprintf-internal.c:1688)
-==20747==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20747==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20747==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20747==    by 0x10A105: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e62 is 2 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 16
-==20747==    at 0x48E40CF: _IO_default_xsputn (genops.c:394)
-==20747==    by 0x48E40CF: _IO_default_xsputn (genops.c:370)
-==20747==    by 0x48C90FB: __vfprintf_internal (vfprintf-internal.c:1688)
-==20747==    by 0x48CBEA1: buffered_vfprintf (vfprintf-internal.c:2377)
-==20747==    by 0x48C8D23: __vfprintf_internal (vfprintf-internal.c:1346)
-==20747==    by 0x48B3C69: fprintf (fprintf.c:32)
-==20747==    by 0x10A105: run (ish.c:356)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48110 is 0 bytes inside a block of size 17 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C7E5: lexLine (lexsyn.c:348)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 8
-==20747==    at 0x10B4E0: freeToken (token.c:14)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 8
-==20747==    at 0x10B4ED: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid free() / delete / delete[] / realloc()
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid free() / delete / delete[] / realloc()
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20929== Invalid read of size 4
-==20929==    at 0x109FB9: run (ish.c:338)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B524: makeToken (token.c:32)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20930== Invalid read of size 8
-==20930==    at 0x10A322: run (ish.c:405)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B504: freeToken (token.c:17)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B524: makeToken (token.c:32)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 4
-==20930==    at 0x10A38E: run (ish.c:412)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B504: freeToken (token.c:17)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B524: makeToken (token.c:32)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 4
-==20930==    at 0x10A3FB: run (ish.c:419)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B504: freeToken (token.c:17)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B524: makeToken (token.c:32)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 1
-==20930==    at 0x49358A4: __execvpe_common (execvpe.c:75)
-==20930==    by 0x49358A4: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 1
-==20930==    at 0x483EBF4: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20930==    by 0x49358BF: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 1
-==20930==    at 0x483EC00: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20930==    by 0x49358BF: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e61 is 1 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 1
-==20930==    at 0x483EEF9: strnlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x4935939: __execvpe_common (execvpe.c:98)
-==20930==    by 0x4935939: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 4
-==20930==    at 0x4935D7D: __execvpe_common (execvpe.c:134)
-==20930==    by 0x4935D7D: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Invalid read of size 4
-==20930==    at 0x4935D86: __execvpe_common (execvpe.c:134)
-==20930==    by 0x4935D86: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20930== Syscall param execve(argv[i]) points to unaddressable byte(s)
-==20930==    at 0x493517B: execve (syscall-template.S:78)
-==20930==    by 0x4935B6E: __execvpe_common (execvpe.c:136)
-==20930==    by 0x4935B6E: execvpe (execvpe.c:190)
-==20930==    by 0x10A490: run (ish.c:428)
-==20930==    by 0x10A1AE: run (ish.c:370)
-==20930==    by 0x10A224: run (ish.c:379)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20930==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B4F8: freeToken (token.c:15)
-==20930==    by 0x10A689: oTokenfree (ish.c:468)
-==20930==    by 0x10A146: run (ish.c:360)
-==20930==    by 0x109B01: shellHelper (ish.c:163)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930==  Block was alloc'd at
-==20930==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20930==    by 0x10B55E: makeToken (token.c:39)
-==20930==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20930==    by 0x10C857: lexLine (lexsyn.c:357)
-==20930==    by 0x1099CB: shellHelper (ish.c:136)
-==20930==    by 0x10995E: main (ish.c:112)
-==20930== 
-==20929== Invalid read of size 8
-==20929==    at 0x10A5DC: run (ish.c:453)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B524: makeToken (token.c:32)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20929== Invalid read of size 8
-==20929==    at 0x10B4E0: freeToken (token.c:14)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A63B: run (ish.c:457)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B524: makeToken (token.c:32)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20929== Invalid read of size 8
-==20929==    at 0x10B4ED: freeToken (token.c:15)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A63B: run (ish.c:457)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e18 is 8 bytes inside a block of size 16 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B524: makeToken (token.c:32)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20929== Invalid free() / delete / delete[] / realloc()
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B4F8: freeToken (token.c:15)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A63B: run (ish.c:457)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e60 is 0 bytes inside a block of size 4 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B4F8: freeToken (token.c:15)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B55E: makeToken (token.c:39)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20929== Invalid free() / delete / delete[] / realloc()
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A63B: run (ish.c:457)
-==20929==    by 0x10A1AE: run (ish.c:370)
-==20929==    by 0x10A224: run (ish.c:379)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Address 0x4a47e10 is 0 bytes inside a block of size 16 free'd
-==20929==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B504: freeToken (token.c:17)
-==20929==    by 0x10A689: oTokenfree (ish.c:468)
-==20929==    by 0x10A146: run (ish.c:360)
-==20929==    by 0x109B01: shellHelper (ish.c:163)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929==  Block was alloc'd at
-==20929==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20929==    by 0x10B524: makeToken (token.c:32)
-==20929==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20929==    by 0x10C857: lexLine (lexsyn.c:357)
-==20929==    by 0x1099CB: shellHelper (ish.c:136)
-==20929==    by 0x10995E: main (ish.c:112)
-==20929== 
-==20929== 
-==20929== HEAP SUMMARY:
-==20929==     in use at exit: 80 bytes in 4 blocks
-==20929==   total heap usage: 35 allocs, 44 frees, 3,231 bytes allocated
-==20929== 
-==20929== LEAK SUMMARY:
-==20929==    definitely lost: 0 bytes in 0 blocks
-==20929==    indirectly lost: 0 bytes in 0 blocks
-==20929==      possibly lost: 0 bytes in 0 blocks
-==20929==    still reachable: 80 bytes in 4 blocks
-==20929==         suppressed: 0 bytes in 0 blocks
-==20929== Reachable blocks (those to which a pointer was found) are not shown.
-==20929== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==20929== 
-==20929== For lists of detected and suppressed errors, rerun with: -s
-==20929== ERROR SUMMARY: 127 errors from 17 contexts (suppressed: 0 from 0)
-==20747== Invalid read of size 4
-==20747==    at 0x109FB9: run (ish.c:338)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48020 is 0 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20931== Invalid read of size 8
-==20931==    at 0x10A322: run (ish.c:405)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48028 is 8 bytes inside a block of size 16 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B504: freeToken (token.c:17)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B524: makeToken (token.c:32)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 4
-==20931==    at 0x10A38E: run (ish.c:412)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48020 is 0 bytes inside a block of size 16 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B504: freeToken (token.c:17)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B524: makeToken (token.c:32)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 4
-==20931==    at 0x10A3FB: run (ish.c:419)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48020 is 0 bytes inside a block of size 16 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B504: freeToken (token.c:17)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B524: makeToken (token.c:32)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 1
-==20931==    at 0x49358A4: __execvpe_common (execvpe.c:75)
-==20931==    by 0x49358A4: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 1
-==20931==    at 0x483EBF4: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20931==    by 0x49358BF: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 1
-==20931==    at 0x483EC00: index (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x49358BF: __execvpe_common (execvpe.c:82)
-==20931==    by 0x49358BF: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48071 is 1 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 1
-==20931==    at 0x483EEF9: strnlen (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x4935939: __execvpe_common (execvpe.c:98)
-==20931==    by 0x4935939: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 4
-==20931==    at 0x4935D7D: __execvpe_common (execvpe.c:134)
-==20931==    by 0x4935D7D: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Invalid read of size 4
-==20931==    at 0x4935D86: __execvpe_common (execvpe.c:134)
-==20931==    by 0x4935D86: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20931== Syscall param execve(argv[i]) points to unaddressable byte(s)
-==20931==    at 0x493517B: execve (syscall-template.S:78)
-==20931==    by 0x4935B6E: __execvpe_common (execvpe.c:136)
-==20931==    by 0x4935B6E: execvpe (execvpe.c:190)
-==20931==    by 0x10A490: run (ish.c:428)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x10A224: run (ish.c:379)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20931==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B4F8: freeToken (token.c:15)
-==20931==    by 0x10A689: oTokenfree (ish.c:468)
-==20931==    by 0x10A146: run (ish.c:360)
-==20931==    by 0x109B01: shellHelper (ish.c:163)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931==  Block was alloc'd at
-==20931==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20931==    by 0x10B55E: makeToken (token.c:39)
-==20931==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20931==    by 0x10C857: lexLine (lexsyn.c:357)
-==20931==    by 0x1099CB: shellHelper (ish.c:136)
-==20931==    by 0x10995E: main (ish.c:112)
-==20931== 
-==20747== Invalid read of size 8
-==20747==    at 0x10A5DC: run (ish.c:453)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48028 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 8
-==20747==    at 0x10B4E0: freeToken (token.c:14)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A63B: run (ish.c:457)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48028 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid read of size 8
-==20747==    at 0x10B4ED: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A63B: run (ish.c:457)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48028 is 8 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid free() / delete / delete[] / realloc()
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A63B: run (ish.c:457)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48070 is 0 bytes inside a block of size 4 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B4F8: freeToken (token.c:15)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B55E: makeToken (token.c:39)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== Invalid free() / delete / delete[] / realloc()
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A63B: run (ish.c:457)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Address 0x4a48020 is 0 bytes inside a block of size 16 free'd
-==20747==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B504: freeToken (token.c:17)
-==20747==    by 0x10A689: oTokenfree (ish.c:468)
-==20747==    by 0x10A146: run (ish.c:360)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747==  Block was alloc'd at
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10B524: makeToken (token.c:32)
-==20747==    by 0x10BAF9: createToken (lexsyn.c:15)
-==20747==    by 0x10C857: lexLine (lexsyn.c:357)
-==20747==    by 0x1099CB: shellHelper (ish.c:136)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== 
-==20747== HEAP SUMMARY:
-==20747==     in use at exit: 80 bytes in 4 blocks
-==20747==   total heap usage: 35 allocs, 44 frees, 3,231 bytes allocated
-==20747== 
-==20747== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 4
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10A74E: DynArray_new (dynarray.c:61)
-==20747==    by 0x109FE3: run (ish.c:343)
-==20747==    by 0x10A224: run (ish.c:379)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== 48 (16 direct, 32 indirect) bytes in 1 blocks are definitely lost in loss record 4 of 4
-==20747==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==20747==    by 0x10A74E: DynArray_new (dynarray.c:61)
-==20747==    by 0x109FE3: run (ish.c:343)
-==20747==    by 0x109B01: shellHelper (ish.c:163)
-==20747==    by 0x10995E: main (ish.c:112)
-==20747== 
-==20747== LEAK SUMMARY:
-==20747==    definitely lost: 32 bytes in 2 blocks
-==20747==    indirectly lost: 48 bytes in 2 blocks
-==20747==      possibly lost: 0 bytes in 0 blocks
-==20747==    still reachable: 0 bytes in 0 blocks
-==20747==         suppressed: 0 bytes in 0 blocks
-==20747== 
-==20747== For lists of detected and suppressed errors, rerun with: -s
-==20747== ERROR SUMMARY: 122 errors from 19 contexts (suppressed: 0 from 0)
+==12092== Memcheck, a memory error detector
+==12092== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12092== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==12092== Command: ./ish
+==12092== Parent PID: 312
+==12092== 
+==12096== 
+==12096== HEAP SUMMARY:
+==12096==     in use at exit: 670 bytes in 12 blocks
+==12096==   total heap usage: 31 allocs, 19 frees, 6,239 bytes allocated
+==12096== 
+==12096== 16 bytes in 1 blocks are still reachable in loss record 1 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10B4A9: makeToken (token.c:32)
+==12096==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12096==    by 0x10C5F5: lexLine (lexsyn.c:306)
+==12096==    by 0x1099DA: shellHelper (ish.c:138)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 16 bytes in 1 blocks are still reachable in loss record 2 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10B4A9: makeToken (token.c:32)
+==12096==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12096==    by 0x10C76A: lexLine (lexsyn.c:348)
+==12096==    by 0x1099DA: shellHelper (ish.c:138)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 16 bytes in 1 blocks are still reachable in loss record 3 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10A6D3: DynArray_new (dynarray.c:61)
+==12096==    by 0x10A07C: run (ish.c:357)
+==12096==    by 0x109B10: shellHelper (ish.c:165)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 17 bytes in 1 blocks are still reachable in loss record 4 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10B4E3: makeToken (token.c:39)
+==12096==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12096==    by 0x10C76A: lexLine (lexsyn.c:348)
+==12096==    by 0x1099DA: shellHelper (ish.c:138)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 21 bytes in 3 blocks are still reachable in loss record 5 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10B4E3: makeToken (token.c:39)
+==12096==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12096==    by 0x10C7DC: lexLine (lexsyn.c:357)
+==12096==    by 0x1099DA: shellHelper (ish.c:138)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 48 bytes in 3 blocks are still reachable in loss record 6 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10B4A9: makeToken (token.c:32)
+==12096==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12096==    by 0x10C7DC: lexLine (lexsyn.c:357)
+==12096==    by 0x1099DA: shellHelper (ish.c:138)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 64 bytes in 1 blocks are still reachable in loss record 7 of 8
+==12096==    at 0x483DFAF: realloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x10AA7F: DynArray_grow (dynarray.c:158)
+==12096==    by 0x10AB3C: DynArray_add (dynarray.c:175)
+==12096==    by 0x10A10D: run (ish.c:364)
+==12096==    by 0x109B10: shellHelper (ish.c:165)
+==12096==    by 0x1098BC: main (ish.c:96)
+==12096== 
+==12096== 472 bytes in 1 blocks are still reachable in loss record 8 of 8
+==12096==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12096==    by 0x48D492D: __fopen_internal (iofopen.c:65)
+==12096==    by 0x48D492D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==12096==    by 0x1097FA: main (ish.c:83)
+==12096== 
+==12096== LEAK SUMMARY:
+==12096==    definitely lost: 0 bytes in 0 blocks
+==12096==    indirectly lost: 0 bytes in 0 blocks
+==12096==      possibly lost: 0 bytes in 0 blocks
+==12096==    still reachable: 670 bytes in 12 blocks
+==12096==         suppressed: 0 bytes in 0 blocks
+==12096== 
+==12096== For lists of detected and suppressed errors, rerun with: -s
+==12096== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12098== 
+==12098== HEAP SUMMARY:
+==12098==     in use at exit: 670 bytes in 15 blocks
+==12098==   total heap usage: 35 allocs, 20 frees, 6,303 bytes allocated
+==12098== 
+==12098== 16 bytes in 1 blocks are still reachable in loss record 1 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10B4A9: makeToken (token.c:32)
+==12098==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12098==    by 0x10C76A: lexLine (lexsyn.c:348)
+==12098==    by 0x1099DA: shellHelper (ish.c:138)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 16 bytes in 1 blocks are still reachable in loss record 2 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10A6D3: DynArray_new (dynarray.c:61)
+==12098==    by 0x10A06B: run (ish.c:356)
+==12098==    by 0x109B10: shellHelper (ish.c:165)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 16 bytes in 1 blocks are still reachable in loss record 3 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10A6D3: DynArray_new (dynarray.c:61)
+==12098==    by 0x10A07C: run (ish.c:357)
+==12098==    by 0x10A218: run (ish.c:386)
+==12098==    by 0x109B10: shellHelper (ish.c:165)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 16 bytes in 1 blocks are still reachable in loss record 4 of 9
+==12098==    at 0x483DD99: calloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10A739: DynArray_new (dynarray.c:69)
+==12098==    by 0x10A07C: run (ish.c:357)
+==12098==    by 0x10A218: run (ish.c:386)
+==12098==    by 0x109B10: shellHelper (ish.c:165)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 17 bytes in 1 blocks are still reachable in loss record 5 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10B4E3: makeToken (token.c:39)
+==12098==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12098==    by 0x10C76A: lexLine (lexsyn.c:348)
+==12098==    by 0x1099DA: shellHelper (ish.c:138)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 21 bytes in 4 blocks are still reachable in loss record 6 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10B4E3: makeToken (token.c:39)
+==12098==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12098==    by 0x10C7DC: lexLine (lexsyn.c:357)
+==12098==    by 0x1099DA: shellHelper (ish.c:138)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 32 bytes in 1 blocks are still reachable in loss record 7 of 9
+==12098==    at 0x483DFAF: realloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10AA7F: DynArray_grow (dynarray.c:158)
+==12098==    by 0x10AB3C: DynArray_add (dynarray.c:175)
+==12098==    by 0x10A0BB: run (ish.c:361)
+==12098==    by 0x109B10: shellHelper (ish.c:165)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 64 bytes in 4 blocks are still reachable in loss record 8 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x10B4A9: makeToken (token.c:32)
+==12098==    by 0x10BA7E: createToken (lexsyn.c:15)
+==12098==    by 0x10C7DC: lexLine (lexsyn.c:357)
+==12098==    by 0x1099DA: shellHelper (ish.c:138)
+==12098==    by 0x1098BC: main (ish.c:96)
+==12098== 
+==12098== 472 bytes in 1 blocks are still reachable in loss record 9 of 9
+==12098==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12098==    by 0x48D492D: __fopen_internal (iofopen.c:65)
+==12098==    by 0x48D492D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==12098==    by 0x1097FA: main (ish.c:83)
+==12098== 
+==12098== LEAK SUMMARY:
+==12098==    definitely lost: 0 bytes in 0 blocks
+==12098==    indirectly lost: 0 bytes in 0 blocks
+==12098==      possibly lost: 0 bytes in 0 blocks
+==12098==    still reachable: 670 bytes in 15 blocks
+==12098==         suppressed: 0 bytes in 0 blocks
+==12098== 
+==12098== For lists of detected and suppressed errors, rerun with: -s
+==12098== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12092== 
+==12092== HEAP SUMMARY:
+==12092==     in use at exit: 472 bytes in 1 blocks
+==12092==   total heap usage: 39 allocs, 38 frees, 6,356 bytes allocated
+==12092== 
+==12092== 472 bytes in 1 blocks are still reachable in loss record 1 of 1
+==12092==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12092==    by 0x48D492D: __fopen_internal (iofopen.c:65)
+==12092==    by 0x48D492D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==12092==    by 0x1097FA: main (ish.c:83)
+==12092== 
+==12092== LEAK SUMMARY:
+==12092==    definitely lost: 0 bytes in 0 blocks
+==12092==    indirectly lost: 0 bytes in 0 blocks
+==12092==      possibly lost: 0 bytes in 0 blocks
+==12092==    still reachable: 472 bytes in 1 blocks
+==12092==         suppressed: 0 bytes in 0 blocks
+==12092== 
+==12092== For lists of detected and suppressed errors, rerun with: -s
+==12092== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

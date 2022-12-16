@@ -34,7 +34,7 @@ static void cd(DynArray_T oTokens, char **argv);
 static void run(DynArray_T oTokens, char **argv);
 static void exit_function(DynArray_T oTokens, char **argv);
 
-static void oTokenfree(DynArray_T oTokens);
+static void oTokens_free(DynArray_T oTokens);
 
 /*--------------------------------------------------------------------*/
 /* int main(int argc, char **argv)
@@ -95,7 +95,9 @@ int main(int argc, char **argv) {
       fflush(stdout);
       shellHelper(acLine, argv); // execute command
     }
+    fclose(fp);
   } 
+  
 
   if (chdir(oldpath) != 0) { // change working directory back to original
     perror(argv[0]);
@@ -247,7 +249,7 @@ static void SIGALRM_Handler(int iSig) {
 static void set_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2 && DynArray_getLength(oTokens) != 3 ) {
     fprintf(stderr, "%s: setenv takes one or two parameters\n", argv[0]);
-    oTokenfree(oTokens);
+    oTokens_free(oTokens);
     return;
   }
 
@@ -255,7 +257,7 @@ static void set_env(DynArray_T oTokens, char **argv) {
   char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
 
   setenv(name, value, 1);
-  oTokenfree(oTokens);
+  oTokens_free(oTokens);
 }
 
 
@@ -266,14 +268,14 @@ static void set_env(DynArray_T oTokens, char **argv) {
 static void unset_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2) {
     fprintf(stderr, "%s: setenv takes one parameter\n", argv[0]);
-    oTokenfree(oTokens);
+    oTokens_free(oTokens);
     return;
   }
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
 
   unsetenv(name);
-  oTokenfree(oTokens);
+  oTokens_free(oTokens);
 }
 
 
@@ -293,7 +295,7 @@ static void cd(DynArray_T oTokens, char **argv) {
   }
   else{
     fprintf(stderr, "%s: cd takes one parameter\n", argv[0]);
-    oTokenfree(oTokens);
+    oTokens_free(oTokens);
     return;
   }
 
@@ -301,7 +303,7 @@ static void cd(DynArray_T oTokens, char **argv) {
   if (chdir(path) != 0) {
     perror(argv[0]);
   }
-  oTokenfree(oTokens);
+  oTokens_free(oTokens);
 }
 
 
@@ -312,15 +314,23 @@ static void cd(DynArray_T oTokens, char **argv) {
 static void exit_function(DynArray_T oTokens, char** argv) {
   if(DynArray_getLength(oTokens) != 1) {
     fprintf(stderr, "%s: exit does not take any parameters\n", argv[0]);
-    oTokenfree(oTokens);
+    oTokens_free(oTokens);
     return;
   }
 
-  oTokenfree(oTokens);
+  oTokens_free(oTokens);
   printf("\n");
   exit(EXIT_SUCCESS);
 }
 
+static int haspipe(DynArray_T oTokens) {
+  int i;
+  while ((i < DynArray_getLength(oTokens))
+    &&(((struct Token *)DynArray_get(oTokens, i))->eType != TOKEN_PIPE)) {
+    i++;
+  }
+  return (i < DynArray_getLength(oTokens));
+}
 
 /*--------------------------------------------------------------------*/
 /* static void run(DynArray_T oTokens, char **argv)
@@ -340,6 +350,9 @@ static void run(DynArray_T oTokens, char **argv) {
   }
 
   if (i < DynArray_getLength(oTokens)) {
+    // free token containing '|'
+    freeToken((struct Token *)DynArray_get(oTokens, i), NULL);
+
     DynArray_T oTokens_left = DynArray_new(0);
     DynArray_T oTokens_right = DynArray_new(0);
 
@@ -350,15 +363,7 @@ static void run(DynArray_T oTokens, char **argv) {
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
-
-    //freeing
-    fprintf(stderr, "freed: ");
-    for (i = 0; i < DynArray_getLength(oTokens); i++) {
-      fprintf(stderr, " %s ", ((struct Token*)DynArray_get(oTokens, i))->pcValue);
-    }
-    fprintf(stderr, "\n");
-
-    oTokenfree(oTokens);
+    DynArray_free(oTokens);
 
     // pipe
     pipe(fds);
@@ -369,6 +374,7 @@ static void run(DynArray_T oTokens, char **argv) {
       dup2(fds[1],1);
       close(fds[1]);
       run(oTokens_left, argv); // run left command
+      
       exit(EXIT_SUCCESS);
     }
     else { /* is parent */
@@ -380,6 +386,9 @@ static void run(DynArray_T oTokens, char **argv) {
       run(oTokens_right, argv); // run right command
       dup2(temp, 0);
       close(temp);
+
+      oTokens_free(oTokens_left);
+
       return;
     }
   }
@@ -428,7 +437,7 @@ static void run(DynArray_T oTokens, char **argv) {
     /* invoke program */
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);
-      oTokenfree(oTokens);
+      oTokens_free(oTokens);
       exit(EXIT_FAILURE);
     }
   }
@@ -448,25 +457,19 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
 
-
-    fprintf(stderr, "freed: ");
-    for (i = 0; i < DynArray_getLength(oTokens); i++) {
-      fprintf(stderr, " %s ", ((struct Token*)DynArray_get(oTokens, i))->pcValue);
-    }
-    fprintf(stderr, "\n");
-
-    oTokenfree(oTokens);
+    oTokens_free(oTokens);
     return;
   }
 }
 
 /*--------------------------------------------------------------------*/
-/* static void oTokenfree(DynArray_T oTokens)
+/* static void oTokens_free(DynArray_T oTokens)
 */
 /*--------------------------------------------------------------------*/
-static void oTokenfree(DynArray_T oTokens) {
+static void oTokens_free(DynArray_T oTokens) {
   for (int i = 0; i < DynArray_getLength(oTokens); i++) {
-    freeToken(DynArray_get(oTokens, i), NULL);
+    if(DynArray_get(oTokens, i) != NULL)
+      freeToken(DynArray_get(oTokens, i), NULL);
   }
   DynArray_free(oTokens);
 }
