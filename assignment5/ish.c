@@ -30,10 +30,11 @@ static void SIGALRM_Handler(int iSig);
 
 static void set_env(DynArray_T oTokens, char **argv);
 static void unset_env(DynArray_T oTokens, char **argv);
-static void cd(DynArray_T oTokens, char **argv);
+static void cd_function(DynArray_T oTokens, char **argv);
 static void run(DynArray_T oTokens, char **argv);
 static void exit_function(DynArray_T oTokens, char **argv);
 
+static int getPipeTokenIdx(DynArray_T oTokens);
 static void oTokens_free(DynArray_T oTokens);
 
 /*--------------------------------------------------------------------*/
@@ -65,33 +66,35 @@ int main(int argc, char **argv) {
   assert(pfRet != SIG_ERR);
 
 
-  /* shell */
-    char acLine[MAX_LINE_SIZE + 2];
+  /* buffer for shell command line */
+  char acLine[MAX_LINE_SIZE + 2];
 
   /* get commands from the .ishrc file and execute */
   char oldpath[PATH_MAX]; // store original working directory
   if (getcwd(oldpath, sizeof(oldpath)) == NULL) {
-    perror(argv[0]);
+    perror(argv[0]); // print getcwd error message
   }     
 
   char* homepath = getenv("HOME"); // change working directory to HOME
   if (chdir(homepath) != 0) {
-    perror(argv[0]);
+    perror(argv[0]); // print chdir error message
   }
 
-  FILE *fp;
-  if((fp = fopen(".ishrc","r")) != NULL) { // if file .ishrc exists
+  FILE *fp = fopen(".ishrc","r");
+  if(fp != NULL) { // if file .ishrc exists
     while (1) {
       if (fgets(acLine, MAX_LINE_SIZE, fp) == NULL) { // if no more command
         break; // go get the command from stdin
       }
-      
+/*--------------------------------------------------------------------*//*--------------------------------------------------------------------*/
       int cmd_len = strlen(acLine);
-      if (acLine[cmd_len-1] == '\n') {
-        acLine[cmd_len-1] = '\0'; // get rid of '\n' at the end of each command
+      if (acLine[cmd_len] != '\n') {
+        acLine[cmd_len] = '\n'; // get rid of '\n' at the end of each command
+        acLine[cmd_len+1] = '\0';
       }
-
-      fprintf(stdout, "%% %s\n", acLine); // print command line
+      //else acLine[cmd_len+1] = '\n';
+/*--------------------------------------------------------------------*//*--------------------------------------------------------------------*/
+      fprintf(stdout, "%% %s", acLine); // print command line
       fflush(stdout);
       shellHelper(acLine, argv); // execute command
     }
@@ -146,9 +149,11 @@ static void shellHelper(const char *inLine, char **argv) {
 
       syncheck = syntaxCheck(oTokens);
       if (syncheck == SYN_SUCCESS) {
+        // if command is a builtin function, call corresponding function
+        // if not, run the program                                    
         btype = checkBuiltin(DynArray_get(oTokens, 0));
         /* TODO */
-        switch(btype) {
+        switch(btype) { 
           case B_SETENV:
             set_env(oTokens, argv);
             break;
@@ -156,7 +161,7 @@ static void shellHelper(const char *inLine, char **argv) {
             unset_env(oTokens, argv);
             break;
           case B_CD:
-            cd(oTokens, argv);
+            cd_function(oTokens, argv);
             break;
           case B_EXIT:
             exit_function(oTokens, argv);
@@ -205,7 +210,8 @@ static void shellHelper(const char *inLine, char **argv) {
 
 /*--------------------------------------------------------------------*/
 /* static void SIGQUIT_Handler_Quit(int iSig)
-*/
+   - signal handler for SIGQUIT
+   - terminates process                                               */
 /*--------------------------------------------------------------------*/
 static void SIGQUIT_Handler_Quit(int iSig) {
   exit(EXIT_SUCCESS);
@@ -214,12 +220,16 @@ static void SIGQUIT_Handler_Quit(int iSig) {
 
 /*--------------------------------------------------------------------*/
 /* static void SIGQUIT_Handler_Alarm
-*/
+   - signal handler for SIGQUIT
+   - changes the signal handler for SIGQUIT to SIGQUIT_Handler_Quit
+   - prints the message "Type Ctrl-\ again within 5 seconds to exit."
+     to the standard output stream 
+   - set an alarm of 5 seconds                                        */
 /*--------------------------------------------------------------------*/
 static void SIGQUIT_Handler_Alarm(int iSig) {
   printf("\nType Ctrl-\\ again within 5 seconds to exit.\n");
 
-  /* restore default action of SIGQUIT */
+  /* change the action of SIGQUIT to terminate process */
   void (*pfRet)(int);
   pfRet = signal(SIGQUIT, SIGQUIT_Handler_Quit);
   assert(pfRet != SIG_ERR);
@@ -231,7 +241,8 @@ static void SIGQUIT_Handler_Alarm(int iSig) {
 
 /*--------------------------------------------------------------------*/
 /* static void SIGALRM_Handler(int iSig)
-*/
+   - signal handler for SIGALARM
+   - changes the signal handler for SIGQUIT to SIGQUIT_Handler_Alarm  */
 /*--------------------------------------------------------------------*/
 static void SIGALRM_Handler(int iSig) {
     /* set signal handler for SIGQUIT */
@@ -244,7 +255,9 @@ static void SIGALRM_Handler(int iSig) {
 
 /*--------------------------------------------------------------------*/
 /* static void set_env(DynArray_T oTokens, char **argv)
-*/
+   - recieves oTokens and argument array as input
+   - create enviroment variables according to oTokens
+   - overwrite environment variable values if variables exist         */
 /*--------------------------------------------------------------------*/
 static void set_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2 && DynArray_getLength(oTokens) != 3 ) {
@@ -263,7 +276,8 @@ static void set_env(DynArray_T oTokens, char **argv) {
 
 /*--------------------------------------------------------------------*/
 /* static void unset_env(DynArray_T oTokens, char **argv)
-*/
+   - recieves oTokens and argument array as input
+   - deletes the environment variable                                 */
 /*--------------------------------------------------------------------*/
 static void unset_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2) {
@@ -280,10 +294,12 @@ static void unset_env(DynArray_T oTokens, char **argv) {
 
 
 /*--------------------------------------------------------------------*/
-/* static void cd(DynArray_T oTokens, char **argv)
-*/
+/* static void cd_function(DynArray_T oTokens, char **argv)
+   - recieves oTokens and argument array as input
+   - changes the working directory to which specified by oTokens,
+     or to the HOME directory if it is omitted                        */
 /*--------------------------------------------------------------------*/
-static void cd(DynArray_T oTokens, char **argv) {
+static void cd_function(DynArray_T oTokens, char **argv) {
   char *path;
 
   /* get the path */
@@ -309,7 +325,8 @@ static void cd(DynArray_T oTokens, char **argv) {
 
 /*--------------------------------------------------------------------*/
 /* static void exit_function(DynArray_T oTokens, char** argv)
-*/
+   - recieves oTokens and argument array as input
+   - terminates program with exit status 0(EXIT_SUCCESS)              */
 /*--------------------------------------------------------------------*/
 static void exit_function(DynArray_T oTokens, char** argv) {
   if(DynArray_getLength(oTokens) != 1) {
@@ -323,70 +340,94 @@ static void exit_function(DynArray_T oTokens, char** argv) {
   exit(EXIT_SUCCESS);
 }
 
-static int haspipe(DynArray_T oTokens) {
-  int i;
+
+/*--------------------------------------------------------------------*/
+/* static int getPipeTokenIdx(DynArray_T oTokens)
+   - recieves oTokens as input
+   - outputs index of the token that contains "|"
+   - if no such token exists, outputs -1*/ 
+/*--------------------------------------------------------------------*/
+static int getPipeTokenIdx(DynArray_T oTokens) {
+  int i = 0;
   while ((i < DynArray_getLength(oTokens))
     &&(((struct Token *)DynArray_get(oTokens, i))->eType != TOKEN_PIPE)) {
     i++;
   }
-  return (i < DynArray_getLength(oTokens));
+  
+  if (i == DynArray_getLength(oTokens))
+    return -1; // no pipe token
+  else
+    return i; // pipe token index
 }
+
 
 /*--------------------------------------------------------------------*/
 /* static void run(DynArray_T oTokens, char **argv)
-*/
+   - recieves oTokens and argument array as input
+   - runs the command given by oTokens                                */
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
 
-  pid_t pid;
-  int i = 0, j;
+  pid_t pid_for_exec, pid_for_pipe;
+  int i, j;
   int fds[2];
   char *arguments[MAX_ARGS_CNT];
 
   /* pipe */
-  while ((i < DynArray_getLength(oTokens))
-       &&(((struct Token *)DynArray_get(oTokens, i))->eType != TOKEN_PIPE)) {
-    i++;
-  }
+  i = getPipeTokenIdx(oTokens);
 
-  if (i < DynArray_getLength(oTokens)) {
+  if (i >= 0) {
     // free token containing '|'
     freeToken((struct Token *)DynArray_get(oTokens, i), NULL);
 
+    // divide oTokens for left/right command
     DynArray_T oTokens_left = DynArray_new(0);
     DynArray_T oTokens_right = DynArray_new(0);
 
-    // make array of arguments for left/right command
     for (j = 0; j < i; j++) {
       DynArray_add(oTokens_left, DynArray_get(oTokens, j));
     }
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
+    
+    // free original dynamic array containing the tokens
     DynArray_free(oTokens);
 
-    // pipe
+    // create pipe
     pipe(fds);
 
-    int id = fork();
-    if (id == 0) { /* is child */
+    if((pid_for_pipe = fork()) < 0) {
+      perror(argv[0]); // print forking error message
+      return;
+    }
+    else if (pid_for_pipe == 0) { /* is child */
+      // redirect child stdout to pipe
       close(fds[0]);
       dup2(fds[1],1);
       close(fds[1]);
-      run(oTokens_left, argv); // run left command
       
+      // run left command
+      run(oTokens_left, argv); 
       exit(EXIT_SUCCESS);
     }
     else { /* is parent */
-      waitpid(id, NULL, 0);
+      waitpid(pid_for_pipe, NULL, 0);
+
+      // redirect pipe to parent stdin
       close(fds[1]);
       int temp = dup(0);
       dup2(fds[0],0);
       close(fds[0]);
-      run(oTokens_right, argv); // run right command
+
+      // run right command
+      run(oTokens_right, argv);
+
+      // restore stdin
       dup2(temp, 0);
       close(temp);
 
+      // free oTokens that was used in child process
       oTokens_free(oTokens_left);
 
       return;
@@ -395,14 +436,11 @@ static void run(DynArray_T oTokens, char **argv) {
 
 
   /* base case where there is no pipe */
-
-  /* fork child process*/
-  if((pid = fork()) < 0) {
-    /* print forking error message */
-    perror(argv[0]);
+  if((pid_for_exec = fork()) < 0) {
+    perror(argv[0]); // print forking error message
     return;
   }
-  else if(pid == 0) { /* is child */
+  else if(pid_for_exec == 0) { /* is child */
     /* restore default action of SIGINT & SIGQUIT */
     void (*pfRet)(int);
     pfRet = signal(SIGINT, SIG_DFL);
@@ -436,13 +474,13 @@ static void run(DynArray_T oTokens, char **argv) {
 
     /* invoke program */
     if(execvp(arguments[0], arguments) < 0) {
-      perror(arguments[0]);
+      perror(arguments[0]);  // print execvp error message
       oTokens_free(oTokens);
       exit(EXIT_FAILURE);
     }
   }
   else { /* is parent */
-    waitpid(pid, NULL, 0);
+    waitpid(pid_for_exec, NULL, 0);
 
     /* ignore SIGINT */
     void (*pfRet)(int);
@@ -457,6 +495,7 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
 
+    // free oTokens
     oTokens_free(oTokens);
     return;
   }
@@ -464,7 +503,9 @@ static void run(DynArray_T oTokens, char **argv) {
 
 /*--------------------------------------------------------------------*/
 /* static void oTokens_free(DynArray_T oTokens)
-*/
+
+  inputted oTokens, frees all data associated with oToken 
+ */
 /*--------------------------------------------------------------------*/
 static void oTokens_free(DynArray_T oTokens) {
   for (int i = 0; i < DynArray_getLength(oTokens); i++) {
