@@ -10,8 +10,6 @@
 
 #include "lexsyn.h"
 #include "util.h"
-// #include "token.h"
-// #include "dynarray.h"
 
 
 /*--------------------------------------------------------------------*/
@@ -36,6 +34,7 @@ static void cd(DynArray_T oTokens, char **argv);
 static void run(DynArray_T oTokens, char **argv);
 static void exit_function(DynArray_T oTokens, char **argv);
 
+static void oTokenfree(DynArray_T oTokens);
 
 /*--------------------------------------------------------------------*/
 /* int main(int argc, char **argv)
@@ -67,47 +66,50 @@ int main(int argc, char **argv) {
 
 
   /* shell */
-  char acLine[MAX_LINE_SIZE + 2];
+    char acLine[MAX_LINE_SIZE + 2];
 
-  char oldpath[PATH_MAX];                // store oldpath
-  if (getcwd(oldpath, sizeof(oldpath)) < 0) {
+  /* get commands from the .ishrc file and execute */
+  char oldpath[PATH_MAX]; // store original working directory
+  if (getcwd(oldpath, sizeof(oldpath)) == NULL) {
     perror(argv[0]);
   }     
 
-  char* homepath = getenv("HOME");      // change working directory to HOME
+  char* homepath = getenv("HOME"); // change working directory to HOME
   if (chdir(homepath) != 0) {
     perror(argv[0]);
   }
 
   FILE *fp;
-  if((fp = fopen(".ishrc","r")) != NULL) {  // if there is file .ishrc
+  if((fp = fopen(".ishrc","r")) != NULL) { // if file .ishrc exists
     while (1) {
-      if (fgets(acLine, MAX_LINE_SIZE, fp) == NULL) { // if input is NULL
-        //printf("\n");
-        break;                       // go on to receive input from stdin
+      if (fgets(acLine, MAX_LINE_SIZE, fp) == NULL) { // if no more command
+        break; // go get the command from stdin
+      }
+      
+      int cmd_len = strlen(acLine);
+      if (acLine[cmd_len-1] == '\n') {
+        acLine[cmd_len-1] = '\0'; // get rid of '\n' at the end of each command
       }
 
-      fprintf(stdout, "%% %s", acLine);      // print command line
+      fprintf(stdout, "%% %s\n", acLine); // print command line
       fflush(stdout);
-      shellHelper(acLine, argv);    // execute command
+      shellHelper(acLine, argv); // execute command
     }
   } 
 
-  if (chdir(oldpath) != 0) {      // change working directory back to original
+  if (chdir(oldpath) != 0) { // change working directory back to original
     perror(argv[0]);
   }
 
+  /* get the command from stdin and execute */
   while (1) {
-    /* get the command */
     fprintf(stdout, "%% ");
     fflush(stdout);
     if (fgets(acLine, MAX_LINE_SIZE, stdin) == NULL) { // if input is NULL
       printf("\n");
-      exit(EXIT_SUCCESS);                              // exit
+      exit(EXIT_SUCCESS); // exit
     }
-
-    /* execute command */
-    shellHelper(acLine, argv);
+    shellHelper(acLine, argv); // execute command
   }
 }
 
@@ -243,13 +245,14 @@ static void SIGALRM_Handler(int iSig) {
 static void set_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2 && DynArray_getLength(oTokens) != 3 ) {
     fprintf(stderr, "%s: setenv takes one or two parameters\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
   char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   setenv(name, value, 0);
 }
 
@@ -261,12 +264,13 @@ static void set_env(DynArray_T oTokens, char **argv) {
 static void unset_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2) {
     fprintf(stderr, "%s: setenv takes one parameter\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   unsetenv(name);
 }
 
@@ -287,12 +291,12 @@ static void cd(DynArray_T oTokens, char **argv) {
   }
   else{
     fprintf(stderr, "%s: cd takes one parameter\n", argv[0]);
-    DynArray_free(oTokens);
+    oTokenfree(oTokens);
     return;
   }
 
   /* change directory */ 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   if (chdir(path) != 0) {
     perror(argv[0]);
   }
@@ -306,10 +310,11 @@ static void cd(DynArray_T oTokens, char **argv) {
 static void exit_function(DynArray_T oTokens, char** argv) {
   if(DynArray_getLength(oTokens) != 1) {
     fprintf(stderr, "%s: exit does not take any parameters\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   printf("\n");
   exit(EXIT_SUCCESS);
 }
@@ -320,12 +325,74 @@ static void exit_function(DynArray_T oTokens, char** argv) {
 */
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
+
   pid_t pid;
+  int i = 0, j;
+  int fds[2];
+  char *arguments[MAX_ARGS_CNT];
+
+  /* pipe */
+  while ((i < DynArray_getLength(oTokens))
+       &&(((struct Token *)DynArray_get(oTokens, i))->eType != TOKEN_PIPE)) {
+    i++;
+  }
+
+  if (i < DynArray_getLength(oTokens)) {
+    DynArray_T oTokens_left = DynArray_new(0);
+    DynArray_T oTokens_right = DynArray_new(0);
+
+    // make array of arguments for left/right command
+    for (j = 0; j < i; j++) {
+      DynArray_add(oTokens_left, DynArray_get(oTokens, j));
+    }
+    fprintf(stderr,"1. %s\n", ((struct Token *)(DynArray_get(oTokens_left, 0)))->pcValue); //
+    fprintf(stderr,"1. %d\n", DynArray_getLength(oTokens_left)); //
+    // fprintf(stderr, "a\n");
+
+
+    for (j = i+1; j < DynArray_getLength(oTokens); j++) {
+      DynArray_add(oTokens_right, DynArray_get(oTokens, j));
+    }
+    fprintf(stderr,"2. %s\n", ((struct Token *)(DynArray_get(oTokens_right, 0)))->pcValue); //
+    fprintf(stderr,"2. %d\n", DynArray_getLength(oTokens_right)); //
+    // fprintf(stderr, "b\n");
+
+
+    // pipe
+    pipe(fds);
+
+    int id = fork();
+    if (id == 0) { /* is child */
+      close(fds[0]);
+      dup2(fds[1],1);
+      close(fds[1]);
+      fprintf(stderr, "c - running o_left\n");
+      run(oTokens_left, argv); // run left command
+      fprintf(stderr, "left run success\n");
+      exit(EXIT_SUCCESS);
+    }
+    else { /* is parent */
+      waitpid(id, NULL, 0);
+      close(fds[1]);
+      dup2(fds[0],0);
+      close(fds[0]);
+      fprintf(stderr, "d - running o_right\n");
+      run(oTokens_right, argv); // run right command
+      fprintf(stderr, "right run success\n");
+      return;
+    }
+
+    fprintf(stderr, "e\n");
+  }
+
+
+  /* base case where there is no pipe */
 
   /* fork child process*/
   if((pid = fork()) < 0) {
     /* print forking error message */
     perror(argv[0]);
+    return;
   }
   else if(pid == 0) { /* is child */
     /* restore default action of SIGINT & SIGQUIT */
@@ -335,27 +402,22 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGQUIT, SIG_DFL);
     assert(pfRet != SIG_ERR);
 
-
-    int i;
-    char *arguments[MAX_ARGS_CNT];
-    
     /* make an array of arguments*/
     for (i = 0; i < DynArray_getLength(oTokens); i++) {
       arguments[i] = ((struct Token *)DynArray_get(oTokens, i))->pcValue;
     }
     arguments[i] = NULL;
 
-
     /* redirection */
     for (i = 0; i < DynArray_getLength(oTokens); i++) {
-      /* stdin redirection */
+      // stdin redirection
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDIN) {
         int fd = open(arguments[i+1], O_RDONLY);
         close(0);
         dup(fd);
         close(fd);
       } 
-      /* stdout redirection */
+      // stdout redirection
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDOUT) {
         int fd = open(arguments[i+1], O_RDWR | O_CREAT | O_TRUNC, 0600);
         close(1);
@@ -364,15 +426,16 @@ static void run(DynArray_T oTokens, char **argv) {
       } 
     }
 
-
-    /* invoke new program */
+    /* invoke program */
+    fprintf(stderr, "argument is: %s\n", arguments[0]);
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);
+      oTokenfree(oTokens);
       exit(EXIT_FAILURE);
     }
   }
   else { /* is parent */
-    wait(NULL);
+    waitpid(pid, NULL, 0);
 
     /* ignore SIGINT */
     void (*pfRet)(int);
@@ -387,6 +450,18 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
 
-    DynArray_free(oTokens);
+    oTokenfree(oTokens);
+    return;
   }
+}
+
+/*--------------------------------------------------------------------*/
+/* static void oTokenfree(DynArray_T oTokens)
+*/
+/*--------------------------------------------------------------------*/
+static void oTokenfree(DynArray_T oTokens) {
+  for (int i = 0; i < DynArray_getLength(oTokens); i++) {
+    freeToken(DynArray_get(oTokens, i), NULL);
+  }
+  DynArray_free(oTokens);
 }
