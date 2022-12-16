@@ -348,18 +348,9 @@ static void run(DynArray_T oTokens, char **argv) {
     for (j = 0; j < i; j++) {
       DynArray_add(oTokens_left, DynArray_get(oTokens, j));
     }
-    // fprintf(stderr,"1. %s\n", ((struct Token *)(DynArray_get(oTokens_left, 0)))->pcValue); //
-    // fprintf(stderr,"1. %d\n", DynArray_getLength(oTokens_left)); //
-    // fprintf(stderr, "a\n");
-
-
     for (j = i+1; j < DynArray_getLength(oTokens); j++) {
       DynArray_add(oTokens_right, DynArray_get(oTokens, j));
     }
-    // fprintf(stderr,"2. %s\n", ((struct Token *)(DynArray_get(oTokens_right, 0)))->pcValue); //
-    // fprintf(stderr,"2. %d\n", DynArray_getLength(oTokens_right)); //
-    // fprintf(stderr, "b\n");
-
 
     // pipe
     pipe(fds);
@@ -369,9 +360,7 @@ static void run(DynArray_T oTokens, char **argv) {
       close(fds[0]);
       dup2(fds[1],1);
       close(fds[1]);
-      //fprintf(stderr, "c - running o_left\n");
       run(oTokens_left, argv); // run left command
-      //fprintf(stderr, "left run success\n");
       exit(EXIT_SUCCESS);
     }
     else { /* is parent */
