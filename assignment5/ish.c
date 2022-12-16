@@ -44,6 +44,14 @@ static void exit_function(DynArray_T oTokens, char **argv);
 int main(int argc, char **argv) {
   /* TODO */
 
+  /* make sure SIGINT, SIGQUIT, and SIGALRM signals are not blocked */
+  sigset_t sSet;
+  sigemptyset(&sSet);
+  sigaddset(&sSet, SIGINT);
+  sigaddset(&sSet, SIGQUIT);
+  sigaddset(&sSet, SIGALRM);
+  sigprocmask(SIG_UNBLOCK, &sSet, NULL);
+
   /* ignore SIGINT */
   void (*pfRet)(int);
   pfRet = signal(SIGINT, SIG_IGN);
@@ -56,6 +64,7 @@ int main(int argc, char **argv) {
   /* set signal handler for SIGALRM */
   pfRet = signal(SIGALRM, SIGALRM_Handler);
   assert(pfRet != SIG_ERR);
+
 
   /* shell */
   char acLine[MAX_LINE_SIZE + 2];
@@ -301,6 +310,7 @@ static void exit_function(DynArray_T oTokens, char** argv) {
   }
 
   DynArray_free(oTokens);
+  printf("\n");
   exit(EXIT_SUCCESS);
 }
 
