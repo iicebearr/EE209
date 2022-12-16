@@ -12,8 +12,8 @@
 #include "util.h"
 
 #include <linux/limits.h>
-// #include "token.h"
-// #include "dynarray.h"
+#include "token.h"
+#include "dynarray.h"
 
 
 /*--------------------------------------------------------------------*/
@@ -38,6 +38,7 @@ static void cd(DynArray_T oTokens, char **argv);
 static void run(DynArray_T oTokens, char **argv);
 static void exit_function(DynArray_T oTokens, char **argv);
 
+static void oTokenfree(DynArray_T oTokens);
 
 /*--------------------------------------------------------------------*/
 /* int main(int argc, char **argv)
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
   char acLine[MAX_LINE_SIZE + 2];
 
   char oldpath[PATH_MAX];                // store oldpath
-  if (getcwd(oldpath, sizeof(oldpath)) < 0) {
+  if (getcwd(oldpath, sizeof(oldpath)) == NULL) {
     perror(argv[0]);
   }     
 
@@ -163,6 +164,8 @@ static void shellHelper(const char *inLine, char **argv) {
           case NORMAL:
             run(oTokens, argv);  // run the program
             break;
+          default:
+            break;
         }
       }
 
@@ -234,7 +237,8 @@ static void SIGALRM_Handler(int iSig) {
     /* set signal handler for SIGQUIT */
     void (*pfRet)(int);
     pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
-    assert(pfRet != SIG_ERR);}
+    assert(pfRet != SIG_ERR);
+}
 
 
 
@@ -245,13 +249,14 @@ static void SIGALRM_Handler(int iSig) {
 static void set_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2 && DynArray_getLength(oTokens) != 3 ) {
     fprintf(stderr, "%s: setenv takes one or two parameters\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
   char* value = ((struct Token *)DynArray_get(oTokens,2))->pcValue;
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   setenv(name, value, 0);
 }
 
@@ -263,12 +268,13 @@ static void set_env(DynArray_T oTokens, char **argv) {
 static void unset_env(DynArray_T oTokens, char **argv) {
   if(DynArray_getLength(oTokens) != 2) {
     fprintf(stderr, "%s: setenv takes one parameter\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
   char* name = ((struct Token *)DynArray_get(oTokens,1))->pcValue;
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   unsetenv(name);
 }
 
@@ -289,12 +295,12 @@ static void cd(DynArray_T oTokens, char **argv) {
   }
   else{
     fprintf(stderr, "%s: cd takes one parameter\n", argv[0]);
-    DynArray_free(oTokens);
+    oTokenfree(oTokens);
     return;
   }
 
   /* change directory */ 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   if (chdir(path) != 0) {
     perror(argv[0]);
   }
@@ -308,10 +314,11 @@ static void cd(DynArray_T oTokens, char **argv) {
 static void exit_function(DynArray_T oTokens, char** argv) {
   if(DynArray_getLength(oTokens) != 1) {
     fprintf(stderr, "%s: exit does not take any parameters\n", argv[0]);
+    oTokenfree(oTokens);
     return;
   }
 
-  DynArray_free(oTokens);
+  oTokenfree(oTokens);
   printf("\n");
   exit(EXIT_SUCCESS);
 }
@@ -370,6 +377,7 @@ static void run(DynArray_T oTokens, char **argv) {
     /* invoke new program */
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);
+      oTokenfree(oTokens);
       exit(EXIT_FAILURE);
     }
   }
@@ -389,6 +397,13 @@ static void run(DynArray_T oTokens, char **argv) {
     pfRet = signal(SIGALRM, SIGALRM_Handler);
     assert(pfRet != SIG_ERR);
 
-    DynArray_free(oTokens);
+    oTokenfree(oTokens);
   }
+}
+
+static void oTokenfree(DynArray_T oTokens) {
+  for (int i = 0; i < DynArray_getLength(oTokens); i++) {
+    freeToken(DynArray_get(oTokens, i), NULL);
+  }
+  DynArray_free(oTokens);
 }
