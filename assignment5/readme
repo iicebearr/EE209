@@ -1,0 +1,16 @@
+Co Authored by:
+    - 20210013 Eungjoe Kang
+    - 20210421 Ingyu Youn
+
+20210013 Eungjoe Kang mainly contributed to:
+    - non built-in commands
+    - signal handling
+    - redirection
+    - pipe
+
+20210421 Ingyu Youn mainly contributed to:
+    - reading from .ishrc
+    - built-in commands
+    - memory management
+    - debugging
+
