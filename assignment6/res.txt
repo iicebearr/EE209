@@ -1,0 +1,13 @@
+% echo Hello World | sed s/Hello/Hi/g | sed s/World/Planet/g
+Hi Planet
+% echo Hello World | sed s/Hello/Hi/g | sed s/World/Planet/g
+Hi Planet
+% echo h1
+h1
+% echo h2
+h2
+% Hi Planet
+% Hi Planet
+% h1
+% h2
+% 
