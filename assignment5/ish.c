@@ -1,9 +1,9 @@
 /*--------------------------------------------------------------------*/
 /* ish.c
-   - Co Authored by 2021 강응조, 20210421 윤인규
+   - Original Author: Bob Dondero 
+   - Co Authored by 20210013 Eungjoe Kang, 20210421 Ingyu Youn
    - Parses and executes the commmands inputted to stdin              */
 /*--------------------------------------------------------------------*/
-
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,15 +16,6 @@
 
 #include "lexsyn.h"
 #include "util.h"
-
-
-/*--------------------------------------------------------------------*/
-/* ish.c                                                              */
-/* Original Author: Bob Dondero                                       */
-/* Modified by : Park Ilwoo                                           */
-/* Illustrate lexical analysis using a deterministic finite state     */
-/* automaton (DFA)                                                    */
-/*--------------------------------------------------------------------*/
 
 
 /* function declaration*/
@@ -49,6 +40,7 @@ static void oTokens_free(DynArray_T oTokens);
    - recieves lines from the user
    - runs the commands given by the user                              */
 /*--------------------------------------------------------------------*/
+
 int main(int argc, char **argv) {
   /* TODO */
 
@@ -197,27 +189,22 @@ static void shellHelper(const char *inLine, char **argv) {
         errorPrint("Standard input redirection without file name", FPRINTF);
       else if (syncheck == SYN_FAIL_INVALIDBG)
         errorPrint("Invalid use of background", FPRINTF);
-      oTokens_free(oTokens);
       break;
 
     case LEX_QERROR:
       errorPrint("Unmatched quote", FPRINTF);
-      oTokens_free(oTokens);
       break;
 
     case LEX_NOMEM:
       errorPrint("Cannot allocate memory", FPRINTF);
-      oTokens_free(oTokens);
       break;
 
     case LEX_LONG:
       errorPrint("Command is too large", FPRINTF);
-      oTokens_free(oTokens);
       break;
 
     default:
       errorPrint("lexLine needs to be fixed", FPRINTF);
-      oTokens_free(oTokens);
       exit(EXIT_FAILURE);
   }
 }
@@ -470,10 +457,8 @@ static int getPipeTokenIdx(DynArray_T oTokens) {
 /*--------------------------------------------------------------------*/
 static void run(DynArray_T oTokens, char **argv) {
 
-  pid_t pid_for_pipe;
   int i, j;
   int fds[2];
-  char *arguments[MAX_ARGS_CNT];
 
   i = getPipeTokenIdx(oTokens);
   if (i < 0) { // command contains no pipe
