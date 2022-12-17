@@ -348,16 +348,15 @@ static void exit_function(DynArray_T oTokens, char** argv) {
 /*--------------------------------------------------------------------*/
 static void run_no_pipe(DynArray_T oTokens, char **argv) {
 
-  pid_t pid_for_exec;
+  pid_t pid;
   int i;
   char *arguments[MAX_ARGS_CNT];
 
-  /* base case where there is no pipe */
-  if((pid_for_exec = fork()) < 0) {
+  if((pid = fork()) < 0) {
     perror(argv[0]); // print forking error message
     return;
   }
-  else if(pid_for_exec == 0) { /* is child */
+  else if(pid == 0) { /* is child */
     /* restore default action of SIGINT & SIGQUIT */
     void (*pfRet)(int);
     pfRet = signal(SIGINT, SIG_DFL);
@@ -397,7 +396,7 @@ static void run_no_pipe(DynArray_T oTokens, char **argv) {
     }
   }
   else { /* is parent */
-    waitpid(pid_for_exec, NULL, 0);
+    waitpid(pid, NULL, 0);
 
     /* ignore SIGINT */
     void (*pfRet)(int);
@@ -450,11 +449,11 @@ static void run(DynArray_T oTokens, char **argv) {
   char *arguments[MAX_ARGS_CNT];
 
   i = getPipeTokenIdx(oTokens);
-  if (i < 0) {
+  if (i < 0) { // command contains no pipe
     run_no_pipe(oTokens, argv);
     return;
   }
-  else {
+  else { // command contains pipe
     // free token containing '|'
     freeToken((struct Token *)DynArray_get(oTokens, i), NULL);
 
