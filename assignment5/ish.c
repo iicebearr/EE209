@@ -376,7 +376,7 @@ static void run_no_pipe(DynArray_T oTokens, char **argv) {
   fflush(NULL);
   if((pid = fork()) < 0) {
     perror(argv[0]); // print forking error message
-    return;
+    exit(EXIT_FAILURE);
   }
   else if(pid == 0) { /* is child */
     /* restore default action of SIGINT & SIGQUIT */
@@ -487,6 +487,15 @@ static void run(DynArray_T oTokens, char **argv) {
     // divide oTokens for left/right command with respect to pipe
     DynArray_T oTokens_left = DynArray_new(0);
     DynArray_T oTokens_right = DynArray_new(0);
+
+    if (oTokens_left == NULL) {
+      errorPrint("Cannot allocate memory", FPRINTF);
+      exit(EXIT_FAILURE);
+    }
+    if (oTokens_right == NULL) {
+      errorPrint("Cannot allocate memory", FPRINTF);
+      exit(EXIT_FAILURE);
+    }
 
     for (j = 0; j < i; j++) {
       DynArray_add(oTokens_left, DynArray_get(oTokens, j));
