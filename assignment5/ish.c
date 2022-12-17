@@ -189,6 +189,7 @@ static void shellHelper(const char *inLine, char **argv) {
         errorPrint("Standard input redirection without file name", FPRINTF);
       else if (syncheck == SYN_FAIL_INVALIDBG)
         errorPrint("Invalid use of background", FPRINTF);
+      
       break;
 
     case LEX_QERROR:
@@ -206,6 +207,9 @@ static void shellHelper(const char *inLine, char **argv) {
     default:
       errorPrint("lexLine needs to be fixed", FPRINTF);
       exit(EXIT_FAILURE);
+  }
+  if (lexcheck != LEX_SUCCESS && syncheck != SYN_SUCCESS){
+    oTokens_free(oTokens);
   }
 }
 
