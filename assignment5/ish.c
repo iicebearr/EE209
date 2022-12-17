@@ -1,3 +1,9 @@
+/*--------------------------------------------------------------------*/
+/* ish.c
+   - Co Authored by 2021 강응조, 20210421 윤인규
+   - Parses and executes the commmands inputted to stdin              */
+/*--------------------------------------------------------------------*/
+
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +45,9 @@ static void oTokens_free(DynArray_T oTokens);
 
 /*--------------------------------------------------------------------*/
 /* int main(int argc, char **argv)
-*/
+   - main function of the program
+   - recieves lines from the user
+   - runs the commands given by the user                              */
 /*--------------------------------------------------------------------*/
 int main(int argc, char **argv) {
   /* TODO */
@@ -121,7 +129,9 @@ int main(int argc, char **argv) {
 
 /*--------------------------------------------------------------------*/
 /* static void shellHelper(const char *inLine, char **argv)
-*/
+   - inputted inline, a char pointer to the command line
+   - lexically analyzes and syntatically analyzes the line
+   - executes the command in the command line                         */
 /*--------------------------------------------------------------------*/
 static void shellHelper(const char *inLine, char **argv) {
   DynArray_T oTokens;
@@ -187,22 +197,27 @@ static void shellHelper(const char *inLine, char **argv) {
         errorPrint("Standard input redirection without file name", FPRINTF);
       else if (syncheck == SYN_FAIL_INVALIDBG)
         errorPrint("Invalid use of background", FPRINTF);
+      oTokens_free(oTokens);
       break;
 
     case LEX_QERROR:
       errorPrint("Unmatched quote", FPRINTF);
+      oTokens_free(oTokens);
       break;
 
     case LEX_NOMEM:
       errorPrint("Cannot allocate memory", FPRINTF);
+      oTokens_free(oTokens);
       break;
 
     case LEX_LONG:
       errorPrint("Command is too large", FPRINTF);
+      oTokens_free(oTokens);
       break;
 
     default:
       errorPrint("lexLine needs to be fixed", FPRINTF);
+      oTokens_free(oTokens);
       exit(EXIT_FAILURE);
   }
 }
@@ -246,9 +261,16 @@ static void SIGQUIT_Handler_Alarm(int iSig) {
 /*--------------------------------------------------------------------*/
 static void SIGALRM_Handler(int iSig) {
     /* set signal handler for SIGQUIT */
+    sigset_t mask, prev;
+    sigemptyset(&mask);
+    sigaddset(&mask, SIGQUIT);
+    sigprocmask(SIG_BLOCK, &mask, &prev); // block SIGQUIT signals
+
     void (*pfRet)(int);
     pfRet = signal(SIGQUIT, SIGQUIT_Handler_Alarm);
     assert(pfRet != SIG_ERR);
+
+    sigprocmask(SIG_SETMASK, &prev, 0); // restore to previous mask
 }
 
 
@@ -352,6 +374,7 @@ static void run_no_pipe(DynArray_T oTokens, char **argv) {
   int i;
   char *arguments[MAX_ARGS_CNT];
 
+  fflush(NULL);
   if((pid = fork()) < 0) {
     perror(argv[0]); // print forking error message
     return;
@@ -374,7 +397,12 @@ static void run_no_pipe(DynArray_T oTokens, char **argv) {
     for (i = 0; i < DynArray_getLength(oTokens); i++) {
       // stdin redirection
       if (((struct Token *)DynArray_get(oTokens, i))->eType == TOKEN_REDIN) {
-        int fd = open(arguments[i+1], O_RDONLY);
+        int fd;
+        if((fd = open(arguments[i+1], O_RDONLY)) < 0) {
+          perror(argv[0]);  // print open error message - no such file
+          oTokens_free(oTokens);
+          exit(EXIT_FAILURE);
+        }
         close(0);
         dup(fd);
         close(fd);
@@ -387,7 +415,6 @@ static void run_no_pipe(DynArray_T oTokens, char **argv) {
         close(fd);
       } 
     }
-
     /* invoke program */
     if(execvp(arguments[0], arguments) < 0) {
       perror(arguments[0]);  // print execvp error message

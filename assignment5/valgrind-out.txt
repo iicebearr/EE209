@@ -1,0 +1,124 @@
+==9652== Memcheck, a memory error detector
+==9652== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==9652== Using Valgrind-3.15.0-608cb11914-20190413 and LibVEX; rerun with -h for copyright info
+==9652== Command: ./ish
+==9652== Parent PID: 30604
+==9652== 
+--9652-- 
+--9652-- Valgrind options:
+--9652--    --leak-check=full
+--9652--    --show-leak-kinds=all
+--9652--    --track-origins=yes
+--9652--    --verbose
+--9652--    --log-file=valgrind-out.txt
+--9652-- Contents of /proc/version:
+--9652--   Linux version 5.10.102.1-microsoft-standard-WSL2 (oe-user@oe-host) (x86_64-msft-linux-gcc (GCC) 9.3.0, GNU ld (GNU Binutils) 2.34.0.20200220) #1 SMP Wed Mar 2 00:30:59 UTC 2022
+--9652-- 
+--9652-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--9652-- Page sizes: currently 4096, max supported 4096
+--9652-- Valgrind library directory: /usr/lib/x86_64-linux-gnu/valgrind
+--9652-- Reading syms from /home/ejkang/EE209/assignment5/ish
+--9652-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-2.31.so
+--9652--   Considering /usr/lib/debug/.build-id/45/87364908de169dec62ffa538170118c1c3a078.debug ..
+--9652--   .. build-id is valid
+--9652-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/memcheck-amd64-linux
+--9652--    object doesn't have a symbol table
+--9652--    object doesn't have a dynamic symbol table
+--9652-- Scheduler: using generic scheduler lock implementation.
+--9652-- Reading suppressions file: /usr/lib/x86_64-linux-gnu/valgrind/default.supp
+==9652== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-9652-by-ejkang-on-???
+==9652== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-9652-by-ejkang-on-???
+==9652== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-9652-by-ejkang-on-???
+==9652== 
+==9652== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==9652== don't want to do, unless you know exactly what you're doing,
+==9652== or are doing some strange experiment):
+==9652==   /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=9652 ...command...
+==9652== 
+==9652== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==9652==   /path/to/gdb ./ish
+==9652== and then give GDB the following command
+==9652==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=9652
+==9652== --pid is optional if only one valgrind process is running
+==9652== 
+--9652-- REDIR: 0x4022e20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580c9ce2 (???)
+--9652-- REDIR: 0x4022bf0 (ld-linux-x86-64.so.2:index) redirected to 0x580c9cfc (???)
+--9652-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_core-amd64-linux.so
+--9652--    object doesn't have a symbol table
+--9652-- Reading syms from /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so
+--9652--    object doesn't have a symbol table
+==9652== WARNING: new redirection conflicts with existing -- ignoring it
+--9652--     old: 0x04022e20 (strlen              ) R-> (0000.0) 0x580c9ce2 ???
+--9652--     new: 0x04022e20 (strlen              ) R-> (2007.0) 0x0483f060 strlen
+--9652-- REDIR: 0x401f600 (ld-linux-x86-64.so.2:strcmp) redirected to 0x483ffd0 (strcmp)
+--9652-- REDIR: 0x4023380 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4843a20 (mempcpy)
+--9652-- Reading syms from /usr/lib/x86_64-linux-gnu/libc-2.31.so
+--9652--   Considering /usr/lib/debug/.build-id/18/78e6b475720c7c51969e69ab2d276fae6d1dee.debug ..
+--9652--   .. build-id is valid
+--9652-- REDIR: 0x48f2480 (libc.so.6:memmove) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1780 (libc.so.6:strncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f27b0 (libc.so.6:strcasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f10a0 (libc.so.6:strcat) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f17e0 (libc.so.6:rindex) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f3c50 (libc.so.6:rawmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490ece0 (libc.so.6:wmemchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490e820 (libc.so.6:wcscmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f25e0 (libc.so.6:mempcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2410 (libc.so.6:bcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1710 (libc.so.6:strncmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1150 (libc.so.6:strcmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2540 (libc.so.6:memset) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490e7e0 (libc.so.6:wcschr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1670 (libc.so.6:strnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1230 (libc.so.6:strcspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2800 (libc.so.6:strncasecmp) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f11d0 (libc.so.6:strcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2950 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490ff50 (libc.so.6:wcsnlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490e860 (libc.so.6:wcscpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1820 (libc.so.6:strpbrk) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1100 (libc.so.6:index) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1630 (libc.so.6:strlen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48fabb0 (libc.so.6:memrchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2850 (libc.so.6:strcasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f23d0 (libc.so.6:memchr) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x490e930 (libc.so.6:wcslen) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f1ae0 (libc.so.6:strspn) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f2750 (libc.so.6:stpncpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f26f0 (libc.so.6:stpcpy) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f3c90 (libc.so.6:strchrnul) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x48f28a0 (libc.so.6:strncasecmp_l) redirected to 0x48311d0 (_vgnU_ifunc_wrapper)
+--9652-- REDIR: 0x49da500 (libc.so.6:__strrchr_avx2) redirected to 0x483ea10 (rindex)
+--9652-- REDIR: 0x49da6d0 (libc.so.6:__strlen_avx2) redirected to 0x483ef40 (strlen)
+--9652-- REDIR: 0x49d6010 (libc.so.6:__strncmp_avx2) redirected to 0x483f670 (strncmp)
+--9652-- REDIR: 0x48ec0e0 (libc.so.6:malloc) redirected to 0x483b780 (malloc)
+--9652-- REDIR: 0x48f1fa0 (libc.so.6:__GI_strstr) redirected to 0x4843ca0 (__strstr_sse2)
+--9652-- REDIR: 0x49d6530 (libc.so.6:__memchr_avx2) redirected to 0x4840050 (memchr)
+--9652-- REDIR: 0x49dd6e0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x48429f0 (memmove)
+--9652-- REDIR: 0x49da310 (libc.so.6:__strchrnul_avx2) redirected to 0x4843540 (strchrnul)
+--9652-- REDIR: 0x49dd6c0 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4843660 (mempcpy)
+--9652-- REDIR: 0x48edb10 (libc.so.6:calloc) redirected to 0x483dce0 (calloc)
+--9652-- REDIR: 0x49dbc10 (libc.so.6:__strcpy_avx2) redirected to 0x483f090 (strcpy)
+--9652-- REDIR: 0x48ec6d0 (libc.so.6:free) redirected to 0x483c9d0 (free)
+==9652== 
+==9652== HEAP SUMMARY:
+==9652==     in use at exit: 472 bytes in 1 blocks
+==9652==   total heap usage: 12 allocs, 11 frees, 5,713 bytes allocated
+==9652== 
+==9652== Searching for pointers to 1 not-freed blocks
+==9652== Checked 71,272 bytes
+==9652== 
+==9652== 472 bytes in 1 blocks are still reachable in loss record 1 of 1
+==9652==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==9652==    by 0x48D492D: __fopen_internal (iofopen.c:65)
+==9652==    by 0x48D492D: fopen@@GLIBC_2.2.5 (iofopen.c:86)
+==9652==    by 0x10AC1E: main (ish.c:83)
+==9652== 
+==9652== LEAK SUMMARY:
+==9652==    definitely lost: 0 bytes in 0 blocks
+==9652==    indirectly lost: 0 bytes in 0 blocks
+==9652==      possibly lost: 0 bytes in 0 blocks
+==9652==    still reachable: 472 bytes in 1 blocks
+==9652==         suppressed: 0 bytes in 0 blocks
+==9652== 
+==9652== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

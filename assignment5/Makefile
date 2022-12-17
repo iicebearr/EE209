@@ -5,16 +5,15 @@ SUBMIT := $(STUDENT_ID)_assign5.tar.gz
 
 TARGET = ish
 SRCS = $(wildcard *.c)
-OBJS = $(patsubst %.o, %.o, $(SRCS))
+OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 CC = gcc
 CFLAGS = -g
 
-# FIX THIS FILE
-
 all: $(TARGET)
 
-$(TARGET): $(OBJS) 
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET)
 
 submit:
 	mkdir -p $(SUBMIT_DIR)
@@ -26,3 +25,4 @@ clean:
 	rm -rf $(TARGET) *.o
 
 .PHONY: all clean submit
+
