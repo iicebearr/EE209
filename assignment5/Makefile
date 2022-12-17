@@ -7,7 +7,7 @@ TARGET = ish
 SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
-CC = gcc209
+CC = gcc
 CFLAGS = -g
 
 all: $(TARGET)

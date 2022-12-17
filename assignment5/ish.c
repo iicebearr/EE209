@@ -209,7 +209,7 @@ static void shellHelper(const char *inLine, char **argv) {
   }
 
   // if any lexical or syntatic error happened, free oTokens 
-  if (lexcheck != LEX_SUCCESS && syncheck != SYN_SUCCESS){
+  if ((lexcheck != LEX_SUCCESS) || (syncheck != SYN_SUCCESS)){
     oTokens_free(oTokens);
   }
 }
